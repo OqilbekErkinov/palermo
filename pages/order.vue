@@ -80,7 +80,7 @@
             <label>{{ $t('order_payment_title') }}</label>
             <div class="order-form__payment order-form__item--bg mt-8">
               <input v-model="userData.payment" value="payment2" required type="radio" name="payment" id="payment2" />
-              <label for="payment2" class="order-form__payment--info">
+              <label style="text-align: center" for="payment2" class="order-form__payment--info">
                 <h3>{{ $t('order_payment_text3') }}</h3>
               </label>
             </div>

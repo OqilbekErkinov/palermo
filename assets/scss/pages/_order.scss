@@ -121,7 +121,7 @@
 
       label {
         @include font(28px, 100%, 400);
-        margin-bottom: 16px;
+        // margin-bottom: 16px;
         display: block;
 
         @include media($xxl) {
@@ -140,10 +140,10 @@
       }
 
       span {
-        @include font(20px, 130%, 400);
+        @include font(22px, 130%, 400);
 
         @include media($xxl) {
-          @include font(16px, 18px, 400);
+          @include font(20px, 18px, 400);
         }
       }
 
@@ -420,7 +420,8 @@
     width: 100%;
     border-radius: 12px;
     overflow: hidden;
-    background: #fff;
+    background: #535353;
+    backdrop-filter: blur(28.5px);
     display: none;
     z-index: 10;
 
@@ -431,7 +432,7 @@
     &__item {
       @include font(20px, 100%, 400);
       cursor: pointer;
-      color: #000;
+      color: #fff;
       padding: 6px 10px;
 
       @include media($xl) {
