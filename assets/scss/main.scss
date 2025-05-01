@@ -1,0 +1,32 @@
+// Import base styles
+@use "@/assets/scss/base/global";
+@use "@/assets/scss/base/reset";
+@use "@/assets/scss/base/typography";
+
+// Import layouts
+@use "@/assets/scss/layouts/default";
+
+// Import components
+@use "@/assets/scss/components/footer";
+@use "@/assets/scss/components/navbar";
+@use "@/assets/scss/components/Base/button";
+@use "@/assets/scss/components/Base/transparent-button";
+@use "@/assets/scss/components/Base/pointer-top";
+@use "@/assets/scss/components/Base/socials";
+@use "@/assets/scss/components/popular-card";
+@use "@/assets/scss/components/product-card";
+@use "@/assets/scss/components/success";
+@use "@/assets/scss/components/share";
+
+// Import pages
+@use "@/assets/scss/pages/index";
+@use "@/assets/scss/pages/about";
+@use "@/assets/scss/pages/services";
+@use "@/assets/scss/pages/category";
+@use "@/assets/scss/pages/product";
+@use "@/assets/scss/pages/blog";
+@use "@/assets/scss/pages/contact";
+@use "@/assets/scss/pages/saved";
+@use "@/assets/scss/pages/cart";
+@use "@/assets/scss/pages/order";
+@use "@/assets/scss/pages/map";

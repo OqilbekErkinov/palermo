@@ -1,0 +1,26 @@
+@use "@/assets/scss/utilities/animations" as *;
+@use "@/assets/scss/utilities/functions" as *;
+@use "@/assets/scss/utilities/mixins" as *;
+@use "@/assets/scss/utilities/variables" as *;
+
+.main-btn {
+  @include font(18px, 20px, 500);
+  background: linear-gradient(90deg, #e0d8ca 0%, #f8ecd9 100%);
+  box-shadow: 0px 4px 30px 0px #2d2d2d40;
+  color: #000;
+  padding: 14px 18px;
+  border: 2px solid transparent;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  border-radius: 48px;
+  @include media($xxl) {
+    @include font(16px, 20px, 400);
+    padding: 10px 14px;
+  }
+  &:hover {
+    background: transparent;
+    color: #fff;
+    border-color: #ffffff;
+  }
+}

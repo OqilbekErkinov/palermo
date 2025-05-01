@@ -1,0 +1,74 @@
+@use "@/assets/scss/utilities/animations" as *;
+@use "@/assets/scss/utilities/functions" as *;
+@use "@/assets/scss/utilities/mixins" as *;
+@use "@/assets/scss/utilities/variables" as *;
+
+.popular-card {
+  height: 450px;
+  width: 100%;
+  max-width: 315px;
+  border-radius: 60px;
+  position: relative;
+
+  @include media($xxl) {
+    height: 380px;
+  }
+
+  @include media($xl) {
+    height: 320px;
+  }
+
+  @include media($lg) {
+    max-width: 100%;
+  }
+
+  @include media($sm) {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  img {
+    @include fit(cover);
+    border-radius: 40px;
+
+    @include media($xl) {
+      border-radius: 40px;
+    }
+  }
+
+  &__heart {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    cursor: pointer;
+
+    &.active {
+      svg {
+        path {
+          fill-opacity: 1;
+        }
+      }
+    }
+  }
+
+  &__product {
+    position: absolute;
+    bottom: 0;
+    left: 0%;
+    transform: translateX(-25%);
+    width: 240px;
+
+    @include media($xxl) {
+      width: 200px;
+    }
+
+    @include media($xl) {
+      width: 160px;
+      transform: translateX(-20%);
+    }
+
+    img {
+      @include fit(cover);
+    }
+  }
+}

@@ -1,0 +1,69 @@
+@use "@/assets/scss/utilities/animations" as *;
+@use "@/assets/scss/utilities/functions" as *;
+@use "@/assets/scss/utilities/mixins" as *;
+@use "@/assets/scss/utilities/variables" as *;
+
+.share-btn {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  padding: 6px;
+  cursor: pointer;
+  transition: width 300ms ease-in-out;
+  transition-delay: 50ms;
+  z-index: 1;
+}
+
+
+.social-icons {
+  position: absolute;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  right: 0;
+  border-radius: inherit;
+  transition: transform 300ms ease-in-out;
+}
+
+
+.share-icon {
+  transform: scale(0);
+  transition: transform 300ms ease-in-out;
+
+  &.main {
+    transform: scale(1);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    svg {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.share-btn.open {
+  width: 220px;
+  background: rgba(#76716e, 0.95);
+  backdrop-filter: blur(27.9px);
+}
+
+.share-btn.open :is(.share-icon) {
+  transform: scale(1);
+}
+
+.share-btn.open :is(.social-icons) {
+  width: 100%;
+}
+
+.share-btn.open :is(.share-icon.main) {
+  transform: scale(0);
+}

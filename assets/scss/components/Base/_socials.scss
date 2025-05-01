@@ -1,0 +1,70 @@
+@use "@/assets/scss/utilities/animations" as *;
+@use "@/assets/scss/utilities/functions" as *;
+@use "@/assets/scss/utilities/mixins" as *;
+@use "@/assets/scss/utilities/variables" as *;
+
+.socials {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &-item {
+    position: relative;
+    padding: 10px;
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    display: grid;
+    place-items: center;
+    background: #76716e;
+    z-index: 0;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+
+    @include media($xxl) {
+      width: 50px;
+      height: 50px;
+      min-width: 50px;
+
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    &:hover {
+      background: #9b9696;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(91.54deg,
+          rgba(245, 238, 228, 0.71) -0.33%,
+          #9b9696 99.17%);
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: inherit;
+      border-radius: 50%;
+      z-index: -1;
+    }
+  }
+}

@@ -1,0 +1,1222 @@
+@use "@/assets/scss/utilities/animations" as *;
+@use "@/assets/scss/utilities/functions" as *;
+@use "@/assets/scss/utilities/mixins" as *;
+@use "@/assets/scss/utilities/variables" as *;
+
+.about {
+  .header {
+    position: relative;
+    height: 1080px;
+    display: grid;
+    place-items: center;
+
+    @include media($xxl) {
+      height: 800px;
+    }
+
+    @include media($xl) {
+      height: 700px;
+    }
+
+    @include media($lg) {
+      height: 650px;
+    }
+
+    @include media($md) {
+      height: 600px;
+    }
+
+
+    &-title {
+      text-transform: uppercase;
+      margin: 0 auto;
+      @include font(102px, 102px, 400);
+
+      @include media($xxl) {
+        @include font(80px, 90px, 400);
+      }
+
+      @include media($xl) {
+        @include font(64px, 73px, 400);
+      }
+
+      @include media($lg) {
+        @include font(48px, 55px, 400);
+      }
+
+      @include media($md) {
+        @include font(32px, 37px, 400);
+      }
+
+      @include media($sm) {
+        @include font(24px, 27px, 400);
+      }
+    }
+
+    &-gradient {
+      height: 267px;
+      background: linear-gradient(358.31deg,
+          #76716e 18.88%,
+          rgba(220, 211, 205, 0) 65%);
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+
+      @include media($xxl) {
+        height: 200px;
+      }
+
+      @include media($xl) {
+        height: 180px;
+      }
+
+      @include media($lg) {
+        height: 160px;
+      }
+
+      @include media($md) {
+        height: 140px;
+      }
+
+      @include media($sm) {
+        height: 120px;
+      }
+    }
+
+    &-content {
+      position: relative;
+      margin-top: 40px;
+
+      @include media($xl) {
+        margin-top: 20px;
+      }
+
+      &__bg {
+        @include media($xl) {
+          display: none;
+        }
+      }
+
+      &__wrapper {
+        display: grid;
+        grid-template-columns: 5fr 1fr;
+        gap: 60px;
+
+        @include media($xl) {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+      }
+
+      &__info {
+        position: absolute;
+        margin: 0 auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        padding: 20px 20px 30px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        @include media($xxl) {
+          padding: 20px 12px 20px 20px;
+        }
+
+        @include media($xl) {
+          position: relative;
+          transform: translate(0, 0);
+          top: unset;
+          left: unset;
+          padding: 15px 15px;
+          height: 190px;
+          background: linear-gradient(90deg,
+              rgba(139, 139, 139, 0.17) 0%,
+              rgba(37, 37, 37, 0.17) 100%);
+          backdrop-filter: blur(17.900001525878906px);
+          border-radius: 30px;
+          border: 1px solid #8b8b8b;
+          display: flex;
+          justify-content: space-between;
+          gap: 20px;
+        }
+
+        @include media($md) {
+          height: 220px;
+        }
+
+        @include media($sm) {
+          height: auto;
+          display: flex;
+          flex-direction: column;
+        }
+
+
+      }
+
+      &__in {
+        max-width: 70%;
+
+        @include media($xxl) {
+          max-width: 80%;
+        }
+
+        @include media($xs) {
+          max-width: 100%;
+        }
+      }
+
+      &__text {
+        margin-top: 10px;
+        @include font(24px, 27px, 400);
+
+        @include media($xxl) {
+          @include font(20px, 24px, 400);
+          margin-top: 0;
+        }
+
+        @include media($xl) {
+          @include font(18px, 21px, 400);
+        }
+
+        @include media($sm) {
+          @include font(16px, 19px, 400);
+        }
+      }
+
+      &__card {
+        width: 63px;
+        height: 90%;
+        border-radius: 43px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+
+        @include media($xxl) {
+          width: 50px;
+        }
+
+        @include media($xs) {
+          display: none;
+        }
+      }
+    }
+
+    &-variants {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      &.variants--mobile {
+        display: none;
+
+        @include media($sm) {
+          display: flex;
+        }
+      }
+
+      @include media($xl) {
+        flex-direction: row;
+      }
+
+      @include media($sm) {
+        display: none;
+      }
+
+      &__item {
+        width: 174px;
+        height: 111px;
+        border-radius: 49px;
+        background: #000;
+        position: relative;
+
+        @include media($xxl) {
+          width: 150px;
+          height: 80px;
+        }
+
+        @include media($xl) {
+          width: 130px;
+          height: 70px;
+        }
+
+        @include media($sm) {
+          width: 110px;
+          height: 60px;
+        }
+
+        &:first-child {
+          transform: translateY(50px);
+          box-shadow: 0px 4px 15.4px 0px #4b4b4b40;
+          box-shadow: 0px -2px 4px 0px #e0d8ca inset;
+          backdrop-filter: blur(42.900001525878906px);
+          background: #d9d9d908;
+          border: 2px solid #f5eee4b5;
+          z-index: 1;
+
+          @include media($xxl) {
+            transform: translateY(0);
+          }
+        }
+
+        &:nth-child(2) {
+          z-index: 2;
+          transform: translateY(30px);
+          background: #fff;
+          border: 2px solid #f5eee4b5;
+          box-shadow: 0px 4px 15.4px 0px #4b4b4b40;
+          box-shadow: 0px -2px 4px 0px #e0d8ca inset;
+          backdrop-filter: blur(42.900001525878906px);
+
+          @include media($xxl) {
+            transform: translateY(0);
+          }
+        }
+
+        &:last-child {
+          z-index: 3;
+          transform: translateY(10px);
+          box-shadow: 0px 4px 15.4px 0px #4b4b4b40;
+          box-shadow: 0px -2px 4px 0px #e0d8ca inset;
+          backdrop-filter: blur(42.900001525878906px);
+          border: 2px solid #f5eee4b5;
+          background: #d9d9d908;
+
+          @include media($xxl) {
+            transform: translateY(0);
+          }
+        }
+      }
+    }
+  }
+
+  .works {
+    margin-top: 120px;
+
+    @include media($xl) {
+      margin-top: 80px;
+    }
+
+    @include media($sm) {
+      margin-top: 60px;
+    }
+
+    &-title {
+      @include font(64px, 73px, 700);
+      text-align: center;
+      color: #f5f1ea;
+      text-transform: uppercase;
+      margin: 0 auto;
+
+      @include media($xxl) {
+        @include font(50px, 59px, 700);
+      }
+
+      @include media($xl) {
+        @include font(40px, 46px, 700);
+      }
+
+      @include media($lg) {
+        @include font(30px, 34px, 700);
+      }
+    }
+
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 44px 0;
+
+      @include media($xl) {
+        margin: 30px 0;
+      }
+
+      @include media($sm) {
+        margin: 20px 0;
+      }
+
+      &__arrows {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+        position: relative;
+        padding: 6px 12px;
+        background: #76716e;
+        border-radius: 49px;
+
+        @include media($xl) {
+          padding: 6px 12px;
+        }
+
+        @include media($sm) {
+          gap: 10px;
+        }
+
+        &--right,
+        &--left {
+          cursor: pointer;
+
+          &.disabled {
+            opacity: 0.2;
+            cursor: default;
+          }
+
+          svg {
+            @include media($sm) {
+              width: 24px;
+              height: 24px;
+            }
+          }
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: -2px;
+          left: -2px;
+          right: -2px;
+          bottom: -2px;
+          background: linear-gradient(91.54deg,
+              rgba(245, 238, 228, 0.71) -0.33%,
+              #9b9696 99.17%);
+          border-radius: 49px;
+          z-index: -1;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: inherit;
+          border-radius: 49px;
+          z-index: -1;
+        }
+      }
+    }
+
+    &-content {
+      display: flex;
+
+      @include media($md) {
+        flex-direction: column-reverse;
+      }
+    }
+
+    &-swiper {
+      width: 70%;
+
+      @include media($md) {
+        width: 100%;
+      }
+    }
+
+    .work {
+      width: 100%;
+      height: 580px;
+      border-radius: 50px;
+      overflow: hidden;
+      max-width: 400px;
+
+      @include media($xxl) {
+        height: 450px;
+      }
+
+      @include media($xl) {
+        height: 400px;
+      }
+
+      @include media($md) {
+        max-width: 100%;
+        height: 350px;
+        border-radius: 40px;
+
+        &.one--work {
+          height: fit-content;
+          border-radius: 0px;
+        }
+      }
+
+      &-title {
+        @include font(44px, 52px, 400);
+        padding: 20px;
+        text-transform: uppercase;
+
+        @include media($xxl) {
+          @include font(32px, 38px, 400);
+        }
+
+        @include media($xl) {
+          @include font(28px, 34px, 400);
+        }
+
+
+        @include media($md) {
+          padding: 20px 0
+        }
+
+        @include media($sm) {
+          @include font(24px, 27px, 400);
+        }
+      }
+
+      &-text {
+        padding: 0 20px 20px 20px;
+        @include font(24px, 27px, 400);
+
+        @include media($xxl) {
+          @include font(22px, 26px, 400);
+        }
+
+        @include media($xl) {
+          @include font(20px, 24px, 400);
+        }
+
+        @include media($md) {
+          padding: 0 0
+        }
+
+        @include media($sm) {
+          @include font(18px, 22px, 400);
+        }
+      }
+
+      img {
+        @include fit(cover);
+      }
+    }
+  }
+
+  .quality {
+    margin-top: 120px;
+    position: relative;
+
+    @include media($xl) {
+      margin-top: 80px;
+    }
+
+    @include media($sm) {
+      margin-top: 60px;
+    }
+
+    &-title {
+      @include font(64px, 73px, 700);
+      text-align: center;
+      color: #f5f1ea;
+      text-transform: uppercase;
+      margin: 0 auto;
+
+      @include media($xxl) {
+        @include font(50px, 59px, 700);
+      }
+
+      @include media($xl) {
+        @include font(40px, 46px, 700);
+      }
+
+      @include media($lg) {
+        @include font(30px, 34px, 700);
+      }
+    }
+
+    &-content {
+      margin-top: 110px;
+
+      @include media($xl) {
+        margin-top: 80px;
+      }
+
+      @include media($sm) {
+        margin-top: 60px;
+      }
+    }
+
+    &-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      @include media($lg) {
+        flex-direction: column;
+      }
+
+      &__logo {
+        position: absolute;
+        top: 40%;
+        right: 0;
+        max-width: 60%;
+
+        img {
+          @include fit(cover);
+        }
+
+        @include media($xl) {
+          display: none;
+        }
+      }
+    }
+
+    .card-one {
+      position: relative;
+      margin-top: 20px;
+      width: 562px;
+      height: 747px;
+      border-radius: 67px;
+      overflow: hidden;
+
+      @include media($xxl) {
+        width: 420px;
+        height: 550px;
+      }
+
+      @include media($xl) {
+        max-width: 380px;
+        height: 420px;
+      }
+
+      @include media($sm) {
+        border-radius: 40px;
+      }
+
+      @include media($xs) {
+        max-width: 360px;
+        height: 340px;
+        margin: 0 auto;
+      }
+
+      &:hover {
+        img {
+          transform: scale(1.1);
+        }
+      }
+
+      img {
+        transition: all 0.3s ease-in-out;
+        @include fit(cover);
+      }
+
+      &__content {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        max-width: 70%;
+
+        @include media($xxl) {
+          max-width: 60%;
+        }
+
+        @include media($xl) {
+          max-width: 60%;
+          bottom: 12px;
+          right: 12px;
+        }
+
+        &--in {
+          position: relative;
+        }
+      }
+
+      &__info {
+        position: absolute;
+        top: 50%;
+        width: 85%;
+        height: 75%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        @include media($sm) {
+          height: 50%;
+        }
+      }
+
+      &__title {
+        color: #3c372f;
+        @include font(20px, 23px, 400);
+        text-transform: uppercase;
+        max-width: 50%;
+
+        @include media($xxl) {
+          @include font(18px, 21px, 400);
+        }
+
+        @include media($sm) {
+          @include font(16px, 18px, 400);
+        }
+      }
+
+      &__desc {
+        color: #000;
+        @include font(18px, 20px, 400);
+        margin-top: 40px;
+        color: #3c372f99;
+        max-width: 90%;
+
+        @include media($xxl) {
+          @include font(16px, 18px, 400);
+          margin-top: 30px;
+        }
+
+        @include media($sm) {
+          @include font(14px, 16px, 400);
+          margin-top: 18px;
+        }
+      }
+
+      &__pointer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 72px;
+        top: 0;
+        right: 0;
+        width: 82px;
+        height: 82px;
+
+        @include media($xxl) {
+          width: 60px;
+          height: 60px;
+        }
+      }
+    }
+
+    .card-two {
+      position: relative;
+      width: 388px;
+      margin-top: 20px;
+      height: 345px;
+
+      @include media($xxl) {
+        width: 355px;
+        height: 315px;
+      }
+
+      @include media($sm) {
+        margin: 20px auto;
+        border-radius: 40px;
+      }
+
+      &__content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 95%;
+        height: 95%;
+        transform: translate(-50%, -50%);
+      }
+
+      &__title {
+        @include font(24px, 27px, 400);
+        text-transform: uppercase;
+        margin-top: 10px;
+        color: #fff;
+
+        @include media($xxl) {
+          @include font(20px, 23px, 400);
+        }
+
+        @include media($sm) {
+          @include font(16px, 18px, 400);
+        }
+      }
+
+      &__desc {
+        @include font(18px, 20px, 400);
+        color: #ffffff80;
+        margin-top: 4px;
+        max-width: 80%;
+
+        @include media($xxl) {
+          @include font(16px, 18px, 400);
+          max-width: 70%;
+        }
+
+        @include media($sm) {
+          @include font(14px, 16px, 400);
+          max-width: 80%;
+        }
+      }
+
+      &__pointer {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 72px;
+        height: 72px;
+
+        @include media($xxl) {
+          width: 60px;
+          height: 60px;
+        }
+      }
+
+      &__img {
+        height: 228px;
+        width: 100%;
+        border-radius: 50px;
+        overflow: hidden;
+
+        @include media($xxl) {
+          height: 205px;
+        }
+
+        &:hover {
+          img {
+            transform: scale(1.1);
+          }
+        }
+
+        img {
+          transition: all 0.3s ease-in-out;
+          @include fit(cover);
+        }
+      }
+    }
+
+    &-bottom {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 50px;
+
+      @include media($sm) {
+        margin-top: 20px;
+      }
+
+      &__logo {
+        position: absolute;
+        bottom: 15%;
+        left: 0;
+        max-width: 50%;
+
+        @include media($sm) {
+          display: none;
+        }
+
+        img {
+          @include fit(cover);
+
+        }
+      }
+    }
+
+    .card-three {
+      width: 756px;
+      height: 747px;
+      border-radius: 67px;
+      overflow: hidden;
+      position: relative;
+
+      @include media($xxl) {
+        width: 570px;
+        height: 550px;
+      }
+
+      @include media($sm) {
+        width: 100%;
+        max-width: 388px;
+        height: 315px;
+        border-radius: 40px;
+      }
+
+      img {
+        @include fit(cover);
+      }
+
+      &__content {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        backdrop-filter: blur(24.5px);
+        box-shadow: 0px 4px 50px 0px #b8b8b840 inset;
+        box-shadow: 0px 4px 40.3px 0px #46464640;
+        background: #202020;
+        border-radius: 50px;
+        padding-right: 50px;
+        max-width: 60%;
+
+        @include media($sm) {
+          max-width: 90%;
+          bottom: 12px;
+          right: 12px;
+          border-radius: 30px;
+        }
+      }
+
+      &__info {
+        width: 100%;
+        height: 100%;
+        padding: 26px 20px;
+        background: #fff;
+        border-radius: 50px;
+
+        @include media($sm) {
+          padding: 20px 12px;
+          border-radius: 18px
+        }
+      }
+
+      &__title {
+        @include font(30px, 34px, 700);
+        color: #3c372f;
+
+        @include media($xxl) {
+          @include font(24px, 27px, 700);
+        }
+
+        @include media($sm) {
+          @include font(20px, 23px, 700);
+        }
+      }
+
+      &__desc {
+        @include font(20px, 23px, 400);
+        color: #3c372f99;
+        margin-top: 20px;
+
+        @include media($xxl) {
+          @include font(18px, 21px, 400);
+          margin-top: 15px;
+        }
+
+        @include media($sm) {
+          @include font(16px, 18px, 400);
+          margin-top: 12px;
+        }
+      }
+    }
+  }
+
+  .trust {
+    margin-top: 120px;
+
+    @include media($xl) {
+      margin-top: 80px;
+    }
+
+    @include media($sm) {
+      margin-top: 60px;
+    }
+
+    .container {
+      position: relative;
+    }
+
+    &-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200px;
+
+      @include media($xxl) {
+        width: 150px;
+      }
+
+      @include media($xl) {
+        width: 120px;
+      }
+
+      @include media($lg) {
+        width: 100px;
+      }
+
+      @include media($sm) {
+        display: none;
+      }
+
+      img {
+        @include fit(cover);
+      }
+    }
+
+    &-title {
+      @include font(64px, 73px, 700);
+      text-align: center;
+      color: #f5f1ea;
+      text-transform: uppercase;
+      margin: 0 auto;
+
+      @include media($xxl) {
+        @include font(50px, 59px, 700);
+      }
+
+      @include media($xxl) {
+        @include font(50px, 59px, 700);
+      }
+
+      @include media($xl) {
+        @include font(40px, 46px, 700);
+      }
+
+      @include media($lg) {
+        @include font(30px, 34px, 700);
+      }
+    }
+
+    &-desc {
+      @include font(24px, 27px, 400);
+      text-align: center;
+      margin-top: 44px;
+      max-width: 875px;
+      margin: 0 auto;
+
+      @include media($xxl) {
+        @include font(22px, 26px, 400);
+      }
+
+      @include media($xl) {
+        @include font(20px, 23px, 400);
+      }
+
+      @include media($lg) {
+        @include font(18px, 21px, 400);
+      }
+    }
+
+    &-content {
+      margin-top: 100px;
+      display: flex;
+      align-items: center;
+
+      @include media($xxl) {
+        margin-top: 60px;
+        gap: 6px;
+      }
+
+      @include media($md) {
+        margin-top: 30px;
+      }
+
+      &__arrow {
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        border-radius: 50%;
+        box-shadow: 0px 4px 15.4px 0px #4b4b4b40;
+        box-shadow: 0px -2px 4px 0px #e0d8ca inset;
+        backdrop-filter: blur(42.900001525878906px);
+        background: #d9d9d908;
+        border: 2px solid #f5eee4b5;
+        cursor: pointer;
+
+        @include media($lg) {
+          width: 40px;
+          height: 40px;
+          min-width: 40px;
+
+          svg {
+            width: 24px;
+            height: 24px;
+          }
+        }
+
+      }
+
+      .card {
+        width: 100%;
+        height: 584px;
+        backdrop-filter: blur(24.5px);
+        box-shadow: 0px 4px 50px 0px #b8b8b840 inset;
+        box-shadow: 0px 4px 40.3px 0px #46464640;
+        height: 584px;
+        overflow: hidden;
+        background: linear-gradient(90deg,
+            rgba(245, 241, 234, 0.28) 16%,
+            rgba(139, 139, 139, 0.28) 100%);
+        border-radius: 50px;
+        padding: 24px;
+
+        @include media($xxl) {
+          padding: 20px;
+          height: 480px;
+          border-radius: 40px;
+        }
+
+        @include media($lg) {
+          padding: 16px;
+          height: 400px;
+          border-radius: 30px;
+        }
+
+        @include media($sm) {
+          padding: 12px;
+          height: 310px;
+          border-radius: 20px;
+        }
+
+        &-header {
+          display: flex;
+          align-items: center;
+          gap: 28px;
+
+          &__img {
+            width: 117px;
+            height: 117px;
+            border-radius: 50%;
+            overflow: hidden;
+
+            @include media($xxl) {
+              width: 80px;
+              height: 80px;
+            }
+
+            @include media($lg) {
+              width: 64px;
+              height: 64px;
+            }
+
+            @include media($sm) {
+              width: 48px;
+              height: 48px;
+            }
+
+            img {
+              @include fit(cover);
+            }
+          }
+
+          &__name {
+            @include font(34px, 39px, 400);
+            color: #202020;
+
+            @include media($xxl) {
+              @include font(28px, 32px, 400);
+            }
+
+            @include media($lg) {
+              @include font(24px, 28px, 400);
+            }
+
+            @include media($sm) {
+              @include font(20px, 23px, 400);
+            }
+          }
+
+          &__stars {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            @include media($lg) {
+              gap: 2px;
+              margin-top: 6px;
+            }
+
+            svg {
+              @include media($sm) {
+                width: 18px;
+                height: 18px;
+              }
+            }
+          }
+        }
+
+        &-text {
+          @include font(28px, 32px, 400);
+          color: #202020;
+          margin-top: 50px;
+          line-clamp: 6;
+          -webkit-line-clamp: 6;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+
+          @include media($xxl) {
+            @include font(24px, 28px, 400);
+            margin-top: 40px;
+          }
+
+          @include media($lg) {
+            @include font(20px, 23px, 400);
+            margin-top: 30px;
+          }
+
+          @include media($sm) {
+            @include font(18px, 21px, 400);
+            margin-top: 20px;
+          }
+        }
+
+        &-gallery {
+          margin-top: 30px;
+          gap: 20px;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+
+          @include media($lg) {
+            gap: 10px;
+          }
+
+          @include media($sm) {
+            gap: 5px;
+            margin-top: 20px;
+          }
+
+          &__item {
+            width: 100%;
+            height: 163px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+
+            @include media($xxl) {
+              height: 123px;
+            }
+
+            @include media($lg) {
+              height: 100px;
+            }
+
+            @include media($sm) {
+              height: 80px;
+            }
+
+            img {
+              @include fit(cover);
+            }
+
+            &--blur {
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              top: 0;
+              border-radius: 20px;
+              background: #d9d9d903;
+              left: 0;
+              backdrop-filter: blur(18.700000762939453px);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              @include font(54px, 62px, 400);
+              color: #fff;
+
+              @include media($xxl) {
+                @include font(30px, 34px, 400);
+              }
+            }
+          }
+        }
+      }
+
+      .swiper {
+        padding: 20px 0;
+      }
+
+      .swiper-slide-active {
+        transform: scale(1) !important;
+      }
+
+      .swiper-slide {
+        transition: all 0.3s ease;
+        transform: scale(0.9);
+      }
+    }
+  }
+}

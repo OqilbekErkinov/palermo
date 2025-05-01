@@ -1,0 +1,67 @@
+@use "@/assets/scss/utilities/animations" as *;
+@use "@/assets/scss/utilities/functions" as *;
+@use "@/assets/scss/utilities/mixins" as *;
+@use "@/assets/scss/utilities/variables" as *;
+
+.saved {
+  .header {
+    padding-top: 130px;
+
+    @include media($xxl) {
+      padding-top: 100px;
+    }
+
+    @include media($sm) {
+      padding-top: 80px;
+    }
+
+    &-title {
+      text-transform: uppercase;
+      margin: 0 auto;
+      @include font(64px, 100%, 400);
+
+      @include media($xxl) {
+        @include font(44px, 54px, 400);
+      }
+
+      @include media($xl) {
+        @include font(34px, 44px, 400);
+      }
+
+      @include media($sm) {
+        @include font(24px, 34px, 400);
+      }
+
+    }
+
+    &-empty {
+      text-align: center;
+      margin-top: 40px;
+      min-height: 40vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &-content {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+
+      @include media($xl) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      @include media($lg) {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 30px;
+      }
+
+      @include media($sm) {
+        margin-top: 20px;
+        gap: 12px;
+      }
+    }
+  }
+}

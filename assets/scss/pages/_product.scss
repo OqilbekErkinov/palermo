@@ -1,0 +1,593 @@
+@use "@/assets/scss/utilities/animations" as *;
+@use "@/assets/scss/utilities/functions" as *;
+@use "@/assets/scss/utilities/mixins" as *;
+@use "@/assets/scss/utilities/variables" as *;
+
+.detail {
+  .header {
+    position: relative;
+    background: linear-gradient(270deg,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.5) 100%),
+      url("@/assets/images/png/index-bg.png") no-repeat center/cover;
+    height: 1150px;
+    display: grid;
+    place-items: center;
+
+    @include media($xxl) {
+      height: 880px;
+    }
+
+
+    @include media($lg) {
+      height: 660px;
+    }
+
+    @include media($sm) {
+      height: 1100px;
+    }
+
+
+    .container {
+      position: relative;
+    }
+
+    &-gradient {
+      height: 267px;
+      background: linear-gradient(358.31deg,
+          #76716e 18.88%,
+          rgba(220, 211, 205, 0) 65%);
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+
+      @include media($xxl) {
+        height: 200px;
+      }
+
+      @include media($xl) {
+        height: 180px;
+      }
+
+      @include media($lg) {
+        height: 160px;
+      }
+
+      @include media($md) {
+        height: 140px;
+      }
+
+      @include media($sm) {
+        height: 120px;
+      }
+    }
+
+    &-back {
+      position: absolute;
+      left: 0;
+      top: 0;
+      cursor: pointer;
+
+      svg {
+        width: 50px;
+        height: 50px;
+
+        @include media($lg) {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+
+    &-in {
+      padding-top: 70px;
+
+      @include media($lg) {
+        padding-top: 50px;
+      }
+    }
+
+    &-wrapper {
+      display: flex;
+      align-items: stretch;
+      gap: 20px;
+
+      @include media($sm) {
+        flex-direction: column;
+      }
+    }
+
+    &-left {
+      width: 50%;
+
+      @include media($sm) {
+        width: 100%;
+        max-width: 90vw;
+        margin: 0 auto;
+      }
+    }
+
+    &-img {
+      height: 578px;
+      position: relative;
+      margin-bottom: 34px;
+
+      @include media($xxl) {
+        height: 400px;
+        margin-bottom: 20px;
+      }
+
+      @include media($lg) {
+        height: 300px;
+        margin-bottom: 10px;
+      }
+
+      img {
+        border-radius: 67px;
+        @include fit(cover);
+
+        @include media($xxl) {
+          border-radius: 40px;
+        }
+
+        @include media($lg) {
+          border-radius: 30px;
+        }
+      }
+
+      &__discount {
+        position: absolute;
+        border: 1px solid #9b9696;
+        top: 0;
+        left: 0;
+        width: 206px;
+        height: 206px;
+        border-radius: 50%;
+        background: linear-gradient(90deg,
+            rgba(139, 139, 139, 0.17) 0%,
+            rgba(37, 37, 37, 0.17) 100%);
+        backdrop-filter: blur(7.9px);
+        display: grid;
+        place-items: center;
+        @include font(64px, 100%, 700);
+        transform: translate(-50%, 15%);
+
+        @include media($xxl) {
+          width: 160px;
+          height: 160px;
+          @include font(48px, 100%, 700);
+          transform: translate(-20%, 10%);
+        }
+
+        @include media($lg) {
+          width: 120px;
+          height: 120px;
+          @include font(32px, 100%, 700);
+          transform: translate(-10%, 5%);
+        }
+      }
+
+      &__mini {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
+        width: 380px;
+
+        @include media($xxl) {
+          width: 240px;
+        }
+
+        @include media($lg) {
+          width: 160px;
+        }
+
+        img {
+          @include fit(cover);
+        }
+      }
+
+      &__small {
+        height: 243px;
+        border-radius: 67px;
+        overflow: hidden;
+
+        @include media($xxl) {
+          height: 180px;
+          border-radius: 40px;
+        }
+
+        @include media($lg) {
+          height: 120px;
+          border-radius: 30px;
+        }
+
+        img {
+          @include fit(cover);
+        }
+      }
+    }
+
+    &-right {
+      width: 50%;
+
+      @include media($sm) {
+        width: 100%;
+        max-width: 90vw;
+        margin: 0 auto;
+      }
+
+      .one {
+        position: relative;
+        border-radius: 67px;
+        padding: 30px;
+        height: 578px;
+        border: 1px solid #9b9696;
+        background: linear-gradient(90deg,
+            rgba(37, 37, 37, 0.17) 19%,
+            rgba(139, 139, 139, 0.17) 100%);
+        backdrop-filter: blur(24.5px);
+        box-shadow: 0px 4px 50px 0px #b8b8b840 inset;
+        box-shadow: 0px 4px 40.3px 0px #46464640;
+
+        @include media($xxl) {
+          height: 400px;
+          border-radius: 40px;
+          padding: 20px;
+        }
+
+        @include media($lg) {
+          height: 300px;
+          border-radius: 30px;
+          padding: 15px;
+        }
+
+        @include media($sm) {
+          border-radius: 18px;
+        }
+
+        &-title {
+          color: #fff;
+          @include font(64px, 100%, 700);
+          text-transform: capitalize;
+          line-clamp: 1;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          display: -webkit-box;
+          overflow: hidden;
+          max-width: 80%;
+
+          @include media($xxl) {
+            @include font(48px, 100%, 700);
+          }
+
+          @include media($lg) {
+            @include font(32px, 100%, 700);
+          }
+
+          @include media($sm) {
+            @include font(24px, 100%, 700);
+          }
+
+        }
+
+        &-share {
+          display: flex;
+          gap: 18px;
+          position: absolute;
+          top: 30px;
+          right: 30px;
+
+          @include media($xxl) {
+            top: 20px;
+            right: 20px;
+            gap: 12px;
+          }
+
+          &__item {
+            cursor: pointer;
+
+            &.active {
+              svg {
+                path {
+                  fill-opacity: 1;
+                }
+              }
+            }
+          }
+
+
+          svg {
+            @include media($xxl) {
+              width: 24px;
+              height: 24px;
+            }
+
+            @include media($lg) {
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+
+        &-text {
+          display: flex;
+          align-items: flex-end;
+        }
+
+        &-desc {
+          @include font(20px, 24px, 400);
+          color: #fff;
+          margin-top: 30px;
+          line-clamp: 4;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
+          display: -webkit-box;
+          overflow: hidden;
+          // max-width: 80%;
+          max-width: 100%;
+
+          @include media($xxl) {
+            @include font(16px, 14px, 400);
+            margin-top: 24px;
+          }
+
+          @include media($lg) {
+            @include font(14px, 12px, 400);
+            margin-top: 12px;
+          }
+
+          // &__more {
+          //   @include font(16px, 14px, 400);
+          //   color: #000;
+          //   cursor: pointer;
+          //   display: flex;
+          // }
+        }
+
+        &-discount {
+          margin-top: 45px;
+          display: block;
+          color: #202020;
+          @include font(20px, 24px, 400);
+          text-decoration: line-through;
+
+          @include media($xxl) {
+            margin-top: 30px;
+          }
+
+          @include media($lg) {
+            margin-top: 12px;
+          }
+        }
+
+        &-price {
+          margin-top: 30px;
+          display: flex;
+          align-items: flex-end;
+          gap: 10px;
+          color: #fff;
+          @include font(30px, 25px, 700);
+
+          @include media($xxl) {
+            margin-top: 20px;
+          }
+
+          @include media($lg) {
+            margin-top: 6px;
+            @include font(24px, 25px, 700);
+          }
+
+          span {
+            @include font(16px, 14px, 700);
+            text-transform: uppercase;
+          }
+        }
+
+        &-count {
+          margin-top: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 157px;
+          gap: 10px;
+          border: 2px solid #e9e3d9;
+          border-radius: 30px;
+          @include font(24px, 100%, 400);
+
+          @include media($xxl) {
+            margin-top: 20px;
+          }
+
+          @include media($lg) {
+            margin-top: 12px;
+            @include font(20px, 100%, 400);
+            width: 120px;
+          }
+
+          &__dec,
+          &__inc {
+            @include font(28px, 100%, 600);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 2px solid #e9e3d9;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+
+            @include media($lg) {
+              @include font(24px, 100%, 600);
+              width: 32px;
+              height: 32px;
+            }
+          }
+
+          &__inc {
+            transform: translateX(2px);
+          }
+
+          &__dec {
+            transform: translateX(-2px);
+          }
+        }
+
+        &-bottom {
+          display: flex;
+          align-items: center;
+          position: absolute;
+          bottom: 30px;
+          left: 30px;
+
+          @include media($xxl) {
+            bottom: 20px;
+            left: 20px;
+          }
+
+          &__btn {
+            padding: 12px 18px;
+            background: #000;
+            @include font(18px, 100%, 400);
+            text-transform: uppercase;
+            color: #fff;
+            border-radius: 39px;
+            cursor: pointer;
+
+            @include media($lg) {
+              @include font(16px, 100%, 400);
+            }
+          }
+
+          .pointer-top {
+            width: 42px;
+            height: 42px;
+
+            @include media($sm) {
+              width: 32px;
+              height: 32px;
+            }
+          }
+        }
+      }
+
+      .two {
+        border-radius: 67px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 30px;
+        margin-top: 34px;
+        height: 240px;
+        border: 1px solid #9b9696;
+        background: linear-gradient(90deg,
+            rgba(37, 37, 37, 0.17) 19%,
+            rgba(139, 139, 139, 0.17) 100%);
+        backdrop-filter: blur(24.5px);
+        box-shadow: 0px 4px 50px 0px #b8b8b840 inset;
+        box-shadow: 0px 4px 40.3px 0px #46464640;
+
+        @include media($xxl) {
+          margin-top: 20px;
+          border-radius: 40px;
+          padding: 20px;
+          height: 180px;
+        }
+
+        @include media($lg) {
+          border-radius: 30px;
+          padding: 15px;
+          height: auto;
+          margin-top: 10px;
+        }
+
+        @include media($sm) {
+          border-radius: 18px;
+        }
+
+        &-text {
+          @include font(24px, 27px, 400);
+          color: #fff;
+
+          @include media($xxl) {
+            @include font(20px, 100%, 400);
+          }
+
+          @include media($lg) {
+            @include font(16px, 100%, 400);
+          }
+
+          &:not(:last-child) {
+            margin-bottom: 20px;
+
+            @include media($lg) {
+              margin-bottom: 12px;
+            }
+          }
+
+          span {
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
+
+  .rec {
+    margin-top: 100px;
+
+    @include media($xxl) {
+      margin-top: 60px;
+    }
+
+    @include media($lg) {
+      margin-top: 40px;
+    }
+
+    @include media($sm) {
+      margin-top: 20px;
+    }
+
+    &-title {
+      @include font(50px, 100%, 700);
+      text-transform: uppercase;
+      color: #f5f1ea;
+
+      @include media($xxl) {
+        @include font(40px, 100%, 700);
+      }
+
+      @include media($lg) {
+        @include font(30px, 100%, 700);
+      }
+
+      @include media($sm) {
+        @include font(24px, 100%, 700);
+      }
+    }
+
+    &-content {
+      margin-top: 80px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+
+      @include media($xxl) {
+        margin-top: 40px;
+      }
+
+      @include media($xl) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      @include media($lg) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @include media($sm) {
+        margin-top: 20px;
+        gap: 12px;
+      }
+    }
+  }
+}

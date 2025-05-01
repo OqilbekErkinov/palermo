@@ -1,0 +1,490 @@
+@use "@/assets/scss/utilities/animations" as *;
+@use "@/assets/scss/utilities/functions" as *;
+@use "@/assets/scss/utilities/mixins" as *;
+@use "@/assets/scss/utilities/variables" as *;
+
+.cart {
+  padding-top: 130px;
+
+  @include media($xxl) {
+    padding-top: 100px;
+  }
+
+  @include media($sm) {
+    padding-top: 80px;
+  }
+
+  &-title {
+    text-transform: uppercase;
+    margin: 0 auto;
+    @include font(64px, 100%, 400);
+
+    @include media($xxl) {
+      @include font(44px, 54px, 400);
+    }
+
+    @include media($xl) {
+      @include font(34px, 44px, 400);
+    }
+
+    @include media($sm) {
+      @include font(24px, 34px, 400);
+    }
+
+  }
+
+  &-empty {
+    text-align: center;
+    margin-top: 40px;
+    min-height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-header {
+    margin-top: 60px;
+    border: 1px solid #f5eee442;
+    background: linear-gradient(90deg,
+        rgba(37, 37, 37, 0.17) 19%,
+        rgba(139, 139, 139, 0.17) 100%);
+    backdrop-filter: blur(24.5px);
+    box-shadow: 0px 4px 50px 0px #b8b8b840 inset;
+    box-shadow: 0px 4px 40.3px 0px #46464640;
+    border-radius: 60px;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include media($xxl) {
+      margin-top: 30px;
+    }
+
+    @include media($lg) {
+      flex-direction: column;
+      gap: 20px;
+      border-radius: 30px;
+      margin-top: 30px;
+    }
+
+    @include media($sm) {
+      margin-top: 20px;
+      padding: 12px 12px;
+    }
+
+    &__title {
+      @include font(28px, 100%, 400);
+      text-transform: uppercase;
+      max-width: 85%;
+
+      @include media($xxl) {
+        @include font(24px, 100%, 400);
+      }
+
+      @include media($lg) {
+        max-width: 100%;
+        @include font(20px, 100%, 400);
+      }
+    }
+
+    &__text {
+      @include font(24px, 100%, 400);
+      margin-top: 20px;
+
+      @include media($xxl) {
+        @include font(20px, 100%, 400);
+        margin-top: 15px;
+      }
+
+      @include media($lg) {
+        margin-top: 12px;
+        @include font(16px, 100%, 400);
+      }
+    }
+
+    &__right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+
+      @include media($xxl) {
+        gap: 12px;
+      }
+
+      @include media($xs) {
+        // flex-direction: column;
+      }
+    }
+
+    &__item {
+      display: flex;
+      cursor: pointer;
+      align-items: center;
+      border: 2px solid #e9e4da;
+      border-radius: 39px;
+      gap: 12px;
+      padding-left: 20px;
+      white-space: nowrap;
+      @include font(20px, 100%, 400);
+      text-transform: uppercase;
+
+      @include media($xxl) {
+        @include font(16px, 100%, 400);
+      }
+
+      @include media($lg) {
+        @include font(14px, 100%, 400);
+      }
+
+      @include media($sm) {
+        @include font(12px, 100%, 400);
+        padding-left: 12px;
+      }
+    }
+
+    &__icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 2px solid #e9e4da;
+      transform: translateX(2px);
+
+      @include media($xxl) {
+        width: 42px;
+        height: 42px;
+      }
+
+      @include media($sm) {
+        width: 32px;
+        height: 32px;
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+
+    input[type="checkbox"] {
+      width: 52px;
+      height: 52px;
+      transform: translateX(2px);
+
+      @include media($xxl) {
+        width: 42px;
+        height: 42px;
+      }
+
+      @include media($sm) {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+
+  &-content {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+
+    @include media($xl) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include media($lg) {
+      grid-template-columns: repeat(2, 1fr);
+      margin-top: 30px;
+    }
+
+    @include media($sm) {
+      grid-template-columns: repeat(1, 1fr);
+      margin-top: 20px;
+    }
+
+  }
+
+  &-item {
+    background: linear-gradient(90deg,
+        rgba(139, 139, 139, 0.17) 0%,
+        rgba(37, 37, 37, 0.17) 100%);
+    backdrop-filter: blur(37.900001525878906px);
+    border: 2px solid #8b8b8b;
+    border-radius: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+
+    @include media($xxl) {
+      border-radius: 45px;
+    }
+
+    &__actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 20px 0 0;
+
+      @include media($xxl) {
+        gap: 12px;
+        padding: 12px 12px 0 0;
+      }
+
+      &--icon {
+        cursor: pointer;
+
+        svg {
+          width: 34px;
+          height: 34px;
+
+          @include media($xxl) {
+            width: 26px;
+            height: 26px;
+          }
+        }
+      }
+    }
+
+    &__img {
+      width: 100%;
+      height: 250px;
+      position: relative;
+
+      @include media($xxl) {
+        height: 200px;
+      }
+
+      img {
+        @include fit(cover);
+        border-radius: 60px;
+        overflow: hidden;
+
+        @include media($xxl) {
+          border-radius: 45px;
+        }
+      }
+
+      &--small {
+        width: 70%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        img {
+          @include fit(cover);
+          border-radius: 60px;
+          overflow: hidden;
+        }
+      }
+    }
+
+    &__name {
+      @include font(28px, 100%, 700);
+      text-transform: uppercase;
+      line-height: 1;
+      -webkit-line-clamp: 1;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 9px;
+
+      @include media($xxl) {
+        @include font(24px, 100%, 700);
+        margin-bottom: 5px;
+      }
+    }
+
+    &__desc {
+      @include font(24px, 100%, 400);
+      line-clamp: 2;
+      margin: 9px 0;
+      -webkit-line-clamp: 2;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 9px;
+      min-height: 50px;
+
+      @include media($xxl) {
+        @include font(20px, 100%, 400);
+        min-height: 40px;
+      }
+    }
+
+    &__price {
+      margin-top: 9px;
+      @include font(24px, 100%, 700);
+
+      @include media($xxl) {
+        @include font(20px, 100%, 700);
+        margin-top: 5px;
+      }
+
+      span {
+        @include font(16px, 100%, 400);
+        text-transform: uppercase;
+
+        @include media($xxl) {
+          @include font(14px, 100%, 400);
+        }
+      }
+    }
+
+    &__size {
+      margin-top: 16px;
+      @include font(20px, 100%, 400);
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 40px;
+
+      @include media($xxl) {
+        @include font(16px, 100%, 400);
+        margin-top: 10px;
+        min-height: 32px;
+      }
+    }
+
+    &__quantity {
+      margin-top: 30px;
+      @include font(23px, 100%, 400);
+      text-transform: uppercase;
+
+      @include media($xxl) {
+        @include font(20px, 100%, 400);
+        margin-top: 20px;
+      }
+    }
+
+    &__count {
+      margin: 20px 0 40px 0;
+      border-radius: 39px;
+      border: 2px solid #e9e3d9;
+      width: 157px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      @include media($xxl) {
+        width: 120px;
+        margin: 15px 0 20px 0;
+      }
+
+      &--number {
+        @include font(24px, 100%, 400);
+        color: #fff;
+
+        @include media($xxl) {
+          @include font(20px, 100%, 400);
+        }
+      }
+
+      &--el {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 2px solid #e9e3d9;
+        @include font(32px, 100%, 200);
+        cursor: pointer;
+        color: #fff;
+        cursor: pointer;
+
+        @include media($xxl) {
+          width: 32px;
+          height: 32px;
+          @include font(26px, 100%, 200);
+        }
+
+        &:first-child {
+          transform: translateX(-2px);
+        }
+
+        &:last-child {
+          transform: translateX(2px);
+        }
+      }
+    }
+  }
+
+  &-bottom {
+    margin-top: 100px;
+    border: 1px solid #8b8b8b;
+    background: linear-gradient(90deg,
+        rgba(139, 139, 139, 0.17) 0%,
+        rgba(37, 37, 37, 0.17) 100%);
+    backdrop-filter: blur(37.900001525878906px);
+    border-radius: 60px;
+    padding: 30px 0;
+
+    @include media($xxl) {
+      padding: 20px 0;
+      margin-top: 60px;
+      border-radius: 45px;
+    }
+
+    @include media($sm) {
+      margin-top: 40px;
+      border-radius: 30px;
+    }
+
+    &__in {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__title {
+      @include font(24px, 100%, 400);
+      color: #f5f1ea;
+      text-transform: uppercase;
+
+      @include media($xxl) {
+        @include font(20px, 100%, 400);
+      }
+    }
+
+    &__text {
+      @include font(28px, 100%, 700);
+      color: #f5f1ea;
+      margin-top: 16px;
+      text-transform: uppercase;
+
+      @include media($xxl) {
+        @include font(20px, 100%, 700);
+        margin-top: 10px;
+      }
+
+      span {
+        @include font(16px, 100%, 700);
+        text-transform: uppercase;
+
+        @include media($xxl) {
+          @include font(14px, 100%, 700);
+        }
+      }
+    }
+
+    &__right {
+      display: flex;
+      align-items: center;
+    }
+
+    &__arrow {
+      width: 60px;
+      height: 60px;
+
+      @include media($xxl) {
+        width: 45px;
+        height: 45px;
+      }
+    }
+  }
+}
