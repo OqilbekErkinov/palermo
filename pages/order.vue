@@ -40,7 +40,7 @@
 
           <!-- Delivery Date -->
           <div class="order-form__item">
-            <label>{{ $t('order_date_title') }}</label>
+            <label style="margin-bottom: 0.7rem">{{ $t('order_date_title') }}</label>
             <div class="select">
               <div class="select-head" @click="isOpenDays = !isOpenDays">
                 <div class="select-head__left">{{ selectedDay }}</div>
@@ -58,7 +58,7 @@
 
           <!-- User Info -->
           <div class="order-form__item">
-            <label>{{ $t('order_recipient_title') }}</label>
+            <label style="margin-bottom: 0.7rem">{{ $t('order_recipient_title') }}</label>
             <div class="order-form__item--bg">
               <div>
                 <input style="width: 100%;" v-model="userData.name" required type="text" :placeholder="$t('your_name')" @input="validateName" />
@@ -180,7 +180,18 @@ watch(() => userData.value.phone, val => localStorage.setItem('order_phone', val
 
 const regionsAll = [
   { name: { en: 'Tashkent', ru: 'Ташкент' }, value: 'toshkent', coordinates: [41.2995, 69.2401] },
-  // ... other regions
+  { name: { en: "Andijan", ru: "Андижан" }, value: "andijon", coordinates: [40.7833, 72.3500] },
+  { name: { en: "Bukhara", ru: "Бухара" }, value: "bukhara", coordinates: [39.7671, 64.4230] },
+  { name: { en: "Fergana", ru: "Фергана" }, value: "fergana", coordinates: [40.3864, 71.7843] },
+  { name: { en: "Jizzakh", ru: "Джиззах" }, value: "jizzakh", coordinates: [40.1279, 67.8272] },
+  { name: { en: "Namangan", ru: "Наманган" }, value: "namangan", coordinates: [40.9983, 71.6726] },
+  { name: { en: "Navoiy", ru: "Навои" }, value: "navoiy", coordinates: [40.1039, 65.3686] },
+  { name: { en: "Qashqadaryo", ru: "Кашкадарья" }, value: "qashqadaryo", coordinates: [38.8610, 65.7847] },
+  { name: { en: "Samarkand", ru: "Самарканд" }, value: "samarqand", coordinates: [39.6540, 66.9597] },
+  { name: { en: "Surxondaryo", ru: "Сурхандарья" }, value: "surxondaryo", coordinates: [37.9401, 67.5735] },
+  { name: { en: "Sirdaryo", ru: "Сырдарья" }, value: "sirdaryo", coordinates: [40.5000, 68.7500] },
+  { name: { en: "Khorezm", ru: "Хорезм" }, value: "xorazm", coordinates: [41.5500, 60.6333] },
+  { name: { en: "Karakalpakstan", ru: "Каракалпакстан" }, value: "karakalpakstan", coordinates: [42.4601, 59.6170] }
 ]
 const regions = computed(() =>
   regionsAll.map(region => ({
