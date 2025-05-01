@@ -168,6 +168,7 @@
         padding: 10px 0px;
         background: transparent;
         color: #fff;
+        width: 100%;
 
         @include media($xxl) {
           @include font(16px, 18px, 400);
