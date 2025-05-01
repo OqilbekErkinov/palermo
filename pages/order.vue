@@ -61,15 +61,15 @@
             <label>{{ $t('order_recipient_title') }}</label>
             <div class="order-form__item--bg">
               <div>
-                <input v-model="userData.name" required type="text" :placeholder="$t('your_name')" @input="validateName" />
+                <input style="width: 100%;" v-model="userData.name" required type="text" :placeholder="$t('your_name')" @input="validateName" />
                 <p v-if="nameError" class="form-error">{{ nameError }}</p>
               </div>
               <div>
-                <input v-model="userData.surname" required type="text" :placeholder="$t('your_surname')" @input="validateSurname" />
+                <input style="width: 100%;" v-model="userData.surname" required type="text" :placeholder="$t('your_surname')" @input="validateSurname" />
                 <p v-if="surnameError" class="form-error">{{ surnameError }}</p>
               </div>
               <div>
-                <input v-model="userData.phone" required type="text" :placeholder="$t('your_phone')" @input="validatePhone" />
+                <input style="width: 100%;" v-model="userData.phone" required type="text" :placeholder="$t('your_phone')" @input="validatePhone" />
                 <p v-if="phoneError" class="form-error">{{ phoneError }}</p>
               </div>
             </div>

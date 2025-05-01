@@ -140,10 +140,10 @@
       }
 
       span {
-        @include font(22px, 130%, 400);
+        @include font(26px, 130%, 400);
 
         @include media($xxl) {
-          @include font(20px, 18px, 400);
+          @include font(24px, 18px, 400);
         }
       }
 
@@ -168,7 +168,6 @@
         padding: 10px 0px;
         background: transparent;
         color: #fff;
-        width: 100%;
 
         @include media($xxl) {
           @include font(16px, 18px, 400);
