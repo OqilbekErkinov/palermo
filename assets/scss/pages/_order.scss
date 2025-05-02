@@ -149,7 +149,7 @@
 
       &--bg {
         background: #0e0e0e3b;
-        backdrop-filter: blur(42.400001525878906px);
+        // backdrop-filter: blur(42.400001525878906px);
         border-radius: 30px;
         padding: 16px 16px;
         display: flex;
@@ -235,7 +235,7 @@
       justify-content: center;
       cursor: pointer;
       background: #0e0e0e3b;
-      backdrop-filter: blur(42.400001525878906px);
+      // backdrop-filter: blur(42.400001525878906px);
       border-radius: 30px;
       padding: 10px 16px;
       @include font(24px, 100%, 400);
@@ -389,7 +389,7 @@
     justify-content: space-between;
     cursor: pointer;
     background: #0e0e0e3b;
-    backdrop-filter: blur(42.400001525878906px);
+    // backdrop-filter: blur(42.400001525878906px);
     border-radius: 30px;
     padding: 10px 16px;
     @include font(24px, 100%, 400);

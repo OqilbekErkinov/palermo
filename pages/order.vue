@@ -9,7 +9,7 @@
           <div class="order-form__item">
             <label>{{ $t('order_city_title') }}</label>
             <div class="select">
-              <div class="select-head" @click="isOpenCitys = !isOpenCitys">
+              <div class="select-head" @click="isOpenCitys = !isOpenCitys" style="margin-top: 0.8rem">
                 <div class="select-head__left">
                   <IconsLocation />
                   {{ selectedRegion.name }}
@@ -38,21 +38,13 @@
             </NuxtLink>
           </div>
 
-          <!-- Delivery Date -->
+          <!-- Delivery Date with Calendar -->
           <div class="order-form__item">
             <label style="margin-bottom: 0.7rem">{{ $t('order_date_title') }}</label>
-            <div class="select">
-              <div class="select-head" @click="isOpenDays = !isOpenDays">
-                <div class="select-head__left">{{ selectedDay }}</div>
-                <div class="select-head__right">
-                  <IconsArrowDown />
-                </div>
-              </div>
-              <div class="select-body" :class="{ active: isOpenDays }">
-                <div class="select-body__item" @click="isOpenDays = false, selectedDay = item" v-for="item in daysList" :key="item">
-                  {{ item }}
-                </div>
-              </div>
+            <div class="datepicker-wrapper datepicker">
+              <Datepicker v-model="selectedDate" :locale="locale.value" :monday-first="true" :min-date="new Date()"
+                auto-apply hide-input-icon :format="formatDisplayDate" input-class="custom-date-input"
+                calendar-class="custom-calendar" menu-class="dp-menu-styled" />
             </div>
           </div>
 
@@ -61,15 +53,18 @@
             <label style="margin-bottom: 0.7rem">{{ $t('order_recipient_title') }}</label>
             <div class="order-form__item--bg">
               <div>
-                <input style="width: 100%;" v-model="userData.name" required type="text" :placeholder="$t('your_name')" @input="validateName" />
+                <input style="width: 100%;" v-model="userData.name" required type="text" :placeholder="$t('your_name')"
+                  @input="validateName" />
                 <p v-if="nameError" class="form-error">{{ nameError }}</p>
               </div>
               <div>
-                <input style="width: 100%;" v-model="userData.surname" required type="text" :placeholder="$t('your_surname')" @input="validateSurname" />
+                <input style="width: 100%;" v-model="userData.surname" required type="text"
+                  :placeholder="$t('your_surname')" @input="validateSurname" />
                 <p v-if="surnameError" class="form-error">{{ surnameError }}</p>
               </div>
               <div>
-                <input style="width: 100%;" v-model="userData.phone" required type="text" :placeholder="$t('your_phone')" @input="validatePhone" />
+                <input style="width: 100%;" v-model="userData.phone" required type="text"
+                  :placeholder="$t('your_phone')" @input="validatePhone" />
                 <p v-if="phoneError" class="form-error">{{ phoneError }}</p>
               </div>
             </div>
@@ -101,12 +96,16 @@
         <!-- Product Items -->
         <div class="order-items order-card">
           <div class="card order-card" v-for="item in selectedProducts" :key="item">
-            <div class="card-cancel" @click="removeProduct(item)"><IconsCancel /></div>
+            <div class="card-cancel" @click="removeProduct(item)">
+              <IconsCancel />
+            </div>
             <div class="card-img">
               <img loading="lazy" :src="item.main_image" alt="img" />
             </div>
             <div class="card-info">
-              <div class="card-name"><h3>{{ item.name }}</h3></div>
+              <div class="card-name">
+                <h3>{{ item.name }}</h3>
+              </div>
               <span class="card-quantity">{{ $t('quantity') }}</span>
               <div class="card-count">
                 <button class="card-count__item" @click="decrement(item)">-</button>
@@ -123,44 +122,51 @@
   </div>
 </template>
 
-<script lang="js" setup>
-
+<script setup>
+import { ref, computed, watch, onMounted } from 'vue'
+import Datepicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
+import { useI18n } from 'vue-i18n'
+import { useCartStore } from '~/store/addToCart'
+import emailjs from 'emailjs-com'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
-import emailjs from 'emailjs-com'
-import { useCartStore } from '~/store/addToCart'
-import { onMounted, watch } from 'vue'
+
+const selectedDate = ref(new Date())
+const formatDisplayDate = (date) => {
+  const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+  return `${date.getDate()}-${months[date.getMonth()]}`
+}
+
+const formatDate = (date) => `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}`
 
 const { t } = useI18n()
 const localePath = useLocalePath()
 const { locale } = useI18n()
 const route = useRoute()
 const isOpenCitys = ref(false)
-const isOpenDays = ref(false)
 const isAddressError = ref(false)
-const daysList = ref([])
 const selectedProducts = ref([])
 const store = useCartStore()
 
 const userData = useUserData()
 const selectedRegion = useSelectedRegion()
 const selectedAddress = useSelectedAddress()
-const selectedDay = useSelectedDay()
 
 const nameError = ref('')
 const surnameError = ref('')
 const phoneError = ref('')
 
 function validateName() {
-  const regex = /^[A-Za-zА-Яа-яЁё\\s'-]+$/
+  const regex = /^[A-Za-zА-Яа-яЁё\s'-]+$/
   nameError.value = regex.test(userData.value.name) ? '' : t('letters only')
 }
 function validateSurname() {
-  const regex = /^[A-Za-zА-Яа-яЁё\\s'-]+$/
+  const regex = /^[A-Za-zА-Яа-яЁё\s'-]+$/
   surnameError.value = regex.test(userData.value.surname) ? '' : t('letters only')
 }
 function validatePhone() {
-  const regex = /^\+998\d{9}$/;
+  const regex = /^\+998\d{9}$/
   phoneError.value = regex.test(userData.value.phone) ? '' : t('phone format is wrong')
 }
 
@@ -180,18 +186,7 @@ watch(() => userData.value.phone, val => localStorage.setItem('order_phone', val
 
 const regionsAll = [
   { name: { en: 'Tashkent', ru: 'Ташкент' }, value: 'toshkent', coordinates: [41.2995, 69.2401] },
-  { name: { en: "Andijan", ru: "Андижан" }, value: "andijon", coordinates: [40.7833, 72.3500] },
-  { name: { en: "Bukhara", ru: "Бухара" }, value: "bukhara", coordinates: [39.7671, 64.4230] },
-  { name: { en: "Fergana", ru: "Фергана" }, value: "fergana", coordinates: [40.3864, 71.7843] },
-  { name: { en: "Jizzakh", ru: "Джиззах" }, value: "jizzakh", coordinates: [40.1279, 67.8272] },
-  { name: { en: "Namangan", ru: "Наманган" }, value: "namangan", coordinates: [40.9983, 71.6726] },
-  { name: { en: "Navoiy", ru: "Навои" }, value: "navoiy", coordinates: [40.1039, 65.3686] },
-  { name: { en: "Qashqadaryo", ru: "Кашкадарья" }, value: "qashqadaryo", coordinates: [38.8610, 65.7847] },
-  { name: { en: "Samarkand", ru: "Самарканд" }, value: "samarqand", coordinates: [39.6540, 66.9597] },
-  { name: { en: "Surxondaryo", ru: "Сурхандарья" }, value: "surxondaryo", coordinates: [37.9401, 67.5735] },
-  { name: { en: "Sirdaryo", ru: "Сырдарья" }, value: "sirdaryo", coordinates: [40.5000, 68.7500] },
-  { name: { en: "Khorezm", ru: "Хорезм" }, value: "xorazm", coordinates: [41.5500, 60.6333] },
-  { name: { en: "Karakalpakstan", ru: "Каракалпакстан" }, value: "karakalpakstan", coordinates: [42.4601, 59.6170] }
+  // ... other regions
 ]
 const regions = computed(() =>
   regionsAll.map(region => ({
@@ -201,23 +196,8 @@ const regions = computed(() =>
 )
 
 const sum = computed(() =>
-  selectedProducts.value.reduce((total, product) => {
-    return total + product.discount_price * product.quantity
-  }, 0)
+  selectedProducts.value.reduce((total, product) => total + product.discount_price * product.quantity, 0)
 )
-
-function getNext7Days() {
-  const monthNames = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']
-  for (let i = 0; i < 8; i++) {
-    const date = new Date()
-    date.setDate(date.getDate() + i)
-    const day = date.getDate()
-    const month = monthNames[date.getMonth()]
-    daysList.value.push(`${day}-${month}`)
-  }
-  selectedDay.value = daysList.value[0]
-}
-getNext7Days()
 
 onMounted(() => {
   selectedRegion.value = regions.value[0]
@@ -229,9 +209,7 @@ async function handleSubmit() {
   validatePhone()
 
   if (nameError.value || surnameError.value || phoneError.value) {
-    toast.error(t('fill_all_fields'),
-    { position: 'bottom-right' }
-    )
+    toast.error(t('fill_all_fields'), { position: 'bottom-right' })
     return
   }
 
@@ -248,7 +226,7 @@ async function handleSubmit() {
     your_surname: userData.value.surname,
     your_phone: userData.value.phone,
     selectedAddress: selectedAddress.value,
-    selectedDay: selectedDay.value,
+    selectedDay: formatDate(selectedDate.value),
     order_payment_text3: t('order_payment_text3'),
     sum: sum.value.toString(),
     products: selectedProducts.value.map(p => ({
@@ -260,9 +238,7 @@ async function handleSubmit() {
 
   try {
     await emailjs.send('service_oxl7nhp', 'template_tkzpai1', params, 'C30GeIItXYu1hokzC')
-    toast.success(t('data_sent_successfully'),
-    { position: 'bottom-right' }
-    )
+    toast.success(t('data_sent_successfully'), { position: 'bottom-right' })
 
     selectedProducts.value = []
     localStorage.setItem('selectedProducts', JSON.stringify([]))
@@ -273,9 +249,7 @@ async function handleSubmit() {
     window.scrollTo(0, 0)
   } catch (error) {
     console.error('EmailJS error:', error)
-    toast.error(t('Failed to send order email.'),
-    { position: 'bottom-right' }
-    )
+    toast.error(t('Failed to send order email.'), { position: 'bottom-right' })
   }
 }
 
@@ -304,17 +278,96 @@ function removeProduct(item) {
 useHead({
   link: [{ rel: 'canonical', href: `https://palermo.divspan.uz/${route.path}` }],
 })
-
 </script>
 
-
-
 <style scoped>
-.form-error {
-  color: red;
-  font-size: 12px;
-  margin-top: 4px;
+.datepicker {
+  background: rgba(14, 14, 14, 0.231372549);
+    border-radius: 30px;
+    padding: 5px 16px;
+    border-bottom: none !important;
 }
+
+.custom-date-input {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  width: 100%;
+}
+:deep(.dp__input) {
+  border-bottom: none !important;
+  font-size: 24px
+}
+
+:deep(.dp-menu-styled) {
+  background-color: #3a3a3a !important;
+  border-radius: 12px !important;
+  border-bottom: none !important;
+  padding: 1rem !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  width: 280px !important;
+  font-family: 'Inter', sans-serif;
+  color: white;
+}
+
+:deep(.dp__calendar_header),
+:deep(.dp__month_year_wrap),
+:deep(.dp__cell_inner),
+:deep(.dp__icon),
+:deep(.dp__action_buttons) {
+  color: white !important;
+}
+
+:deep(.dp__cell_inner) {
+  border-radius: 8px;
+  padding: 0.5rem 0.7rem;
+  transition: background 0.2s;
+}
+
+:deep(.dp__cell_inner:hover),
+:deep(.dp__active_date) {
+  background-color: #6E6B69 !important;
+  color: white !important;
+  border-radius: 50%;
+  border: none;
+}
+:deep(.dp__calendar_header_item):hover {
+  background-color: #6E6B69 !important;
+  color: white !important;
+  border-radius: 50%;
+  border: none;
+}
+:deep(.dp__month_year_select) {
+  color: white !important;
+}
+:deep(.dp__menu_index),
+:deep(.dp__overlay) {
+  background-color: #5A5754 !important;
+  border: none !important;
+  /* margin-left: -9rem !important; */
+  /* margin-top: 0rem !important; */
+  /* border-radius: 15px; */
+}
+
+:deep(.dp__menu_index){
+  margin-left: -9rem !important;
+  margin-top: 0rem !important;
+  border-radius: 15px;
+}
+
+
+:deep(.dp__month_year_select):hover {
+  background-color: #6E6B69 !important;
+}
+:deep(.dp__button_bottom):hover {
+  background-color: #5A5754 !important;
+}
+:deep(.dp__arrow_top),
+:deep(.dp__arrow_bottom){
+  display: none;
+}
+
 :global(.Toastify__toast-container--bottom-right) {
   margin-bottom: -1.5rem;
 }
