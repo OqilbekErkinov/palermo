@@ -132,9 +132,7 @@ const handleSubmit = async () => {
   validatePhone();
 
   if (nameError.value || emailError.value || phoneError.value) {
-    toast.error(t('fill_all_fields'),
-    { position: 'bottom-right' }
-    );
+    toast.error(t('fill_all_fields'), { position: 'bottom-right' });
     return;
   }
 
@@ -145,28 +143,54 @@ const handleSubmit = async () => {
     contact_message: message.value
   };
 
+  // ✅ 1. Send to Email
   try {
     await emailjs.send('service_oxl7nhp', 'template_apbj5gi', params, 'C30GeIItXYu1hokzC');
+    toast.success(t('message_sent_successfully'), { position: 'bottom-right' });
 
-    toast.success(t('message_sent_successfully'),
-    { position: 'bottom-right' }
-    );
-
+    // Save to localStorage
     localStorage.setItem('contact_name', name.value);
     localStorage.setItem('contact_email', email.value);
     localStorage.setItem('contact_phone', phone.value);
 
+    // ✅ 2. Send to Telegram
+    const telegramToken = '7903740490:AAELqiRtKdirnK1uEEYAaqYsR2lIS2UgmGw';
+    const telegramChatId = '-1002509286937';
+
+    const telegramMessage = `
+📬 *Новое сообщение с контактной формы*
+
+👤 Имя: ${name.value}
+📧 Email: ${email.value}
+📞 Телефон: ${phone.value}
+
+📝 Сообщение: 
+    ${message.value}
+`;
+
+    await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        chat_id: telegramChatId,
+        text: telegramMessage,
+        parse_mode: 'Markdown'
+      })
+    });
+
+    // ✅ Clear form
     name.value = '';
     email.value = '';
     phone.value = '';
     message.value = '';
   } catch (error) {
-    console.error('EmailJS error:', error);
-    toast.error(t('error_occurred'),
-    { position: 'bottom-right' }
-    );
+    console.error('Submission error:', error);
+    toast.error(t('error_occurred'), { position: 'bottom-right' });
   }
 };
+
 
 const route = useRoute();
 useHead({

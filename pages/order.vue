@@ -43,7 +43,7 @@
             <label style="margin-bottom: 0.7rem">{{ $t('order_date_title') }}</label>
             <div class="datepicker-wrapper datepicker">
               <Datepicker v-model="selectedDate" :locale="locale.value" :monday-first="true" :min-date="new Date()"
-                auto-apply hide-input-icon :format="formatDisplayDate" input-class="custom-date-input"
+                auto-apply hide-input-icon :format="formatDate" input-class="custom-date-input"
                 calendar-class="custom-calendar" menu-class="dp-menu-styled" />
             </div>
           </div>
@@ -236,22 +236,64 @@ async function handleSubmit() {
     })),
   }
 
+  // SEND EMAIL
   try {
     await emailjs.send('service_oxl7nhp', 'template_tkzpai1', params, 'C30GeIItXYu1hokzC')
     toast.success(t('data_sent_successfully'), { position: 'bottom-right' })
-
-    selectedProducts.value = []
-    localStorage.setItem('selectedProducts', JSON.stringify([]))
-
-    userData.value = { name: '', surname: '', phone: '', payment: '' }
-    selectedRegion.value = { name: 'Ташкент', value: 'toshkent', coordinates: [41.2995, 69.2401] }
-    selectedAddress.value = ''
-    window.scrollTo(0, 0)
   } catch (error) {
     console.error('EmailJS error:', error)
     toast.error(t('Failed to send order email.'), { position: 'bottom-right' })
+    return
   }
+
+  // SEND TELEGRAM
+  try {
+    const telegramToken = '7903740490:AAELqiRtKdirnK1uEEYAaqYsR2lIS2UgmGw'
+    const telegramChatId = '-1002509286937'
+
+    const message = `
+📦 *Получен новый заказ*
+
+👤 Name: ${userData.value.name} ${userData.value.surname}
+📞 Phone: ${userData.value.phone}
+
+🛒 *Products:*
+${selectedProducts.value.map(p => `- ${p.name} (x${p.quantity}) – ${p.discount_price} ${t('sum')}`).join('\n')}
+    
+📅 Date: ${formatDate(selectedDate.value)}
+💳 Payment: ${t('order_payment_text3')}
+🧾 Total: ${sum.value} ${t('sum')}
+📍  Address: ${selectedAddress.value}
+`
+
+
+
+
+    await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        chat_id: telegramChatId,
+        text: message,
+        parse_mode: 'Markdown'
+      })
+    })
+  } catch (err) {
+    console.error('Telegram error:', err)
+    toast.error(t('Failed to send Telegram message.'), { position: 'bottom-right' })
+  }
+
+  selectedProducts.value = []
+  localStorage.setItem('selectedProducts', JSON.stringify([]))
+
+  userData.value = { name: '', surname: '', phone: '', payment: '' }
+  selectedRegion.value = { name: 'Ташкент', value: 'toshkent', coordinates: [41.2995, 69.2401] }
+  selectedAddress.value = ''
+  window.scrollTo(0, 0)
 }
+
 
 function increment(item) {
   item.quantity++
@@ -281,6 +323,13 @@ useHead({
 </script>
 
 <style scoped>
+.form-error {
+  color: red;
+  font-size: 12px;
+  margin-top: 2px;
+  margin-bottom: -10px;
+}
+
 .datepicker {
   background: rgba(14, 14, 14, 0.231372549);
     border-radius: 30px;
@@ -345,9 +394,6 @@ useHead({
 :deep(.dp__overlay) {
   background-color: #5A5754 !important;
   border: none !important;
-  /* margin-left: -9rem !important; */
-  /* margin-top: 0rem !important; */
-  /* border-radius: 15px; */
 }
 
 :deep(.dp__menu_index){

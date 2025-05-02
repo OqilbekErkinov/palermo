@@ -185,40 +185,67 @@ const message = ref('')
 const {t} = useI18n();
 const handleSubmit = async () => {
   if (!name.value || !email.value || !phone.value || !message.value) {
-    alert("Please fill in all fields")
-    return
+    alert("Please fill in all fields");
+    return;
   }
-  try {
-    const params = {
-      to_name: 'Palermo',
-      from_name: name.value,
-      message: `Name: ${name.value}
-    Email: ${email.value}
-    Phone: ${phone.value}
-    Message: ${message.value}`
-    }
 
+  const params = {
+    to_name: 'Palermo',
+    from_name: name.value,
+    message: `Name: ${name.value}
+Email: ${email.value}
+Phone: ${phone.value}
+Message: ${message.value}`
+  };
+
+  // ✅ 1. Send Email via EmailJS
+  try {
     await emailjs.send(
       'service_b0ehtia',
       'template_h0hee6a',
       params,
       'TpeL7NyK9cxswwzLp'
-    )
+    );
 
-    name.value = ''
-    email.value = ''
-    phone.value = ''
-    message.value = ''
-    toast.success(t('message_sent_successfully'),
-    { position: 'bottom-right' }
-    )
+    // ✅ 2. Send to Telegram Group
+    const telegramToken = '7903740490:AAELqiRtKdirnK1uEEYAaqYsR2lIS2UgmGw';
+    const telegramChatId = '-1002509286937';
+    const telegramMessage = `
+📩 *Новая заявка с услуг*
+
+👤 Имя: ${name.value}
+📧 Email: ${email.value}
+📞 Телефон: ${phone.value}
+
+📝 Сообщение:
+${message.value}
+    `;
+
+    await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        chat_id: telegramChatId,
+        text: telegramMessage,
+        parse_mode: 'Markdown'
+      })
+    });
+
+    // ✅ Reset form
+    name.value = '';
+    email.value = '';
+    phone.value = '';
+    message.value = '';
+
+    toast.success(t('message_sent_successfully'), { position: 'bottom-right' });
   } catch (error) {
-    console.error("Error occurred", error)
-    toast.error(t('error_occurred'),
-    { position: 'bottom-right' }
-    )
+    console.error('Submission error:', error);
+    toast.error(t('error_occurred'), { position: 'bottom-right' });
   }
-}
+};
+
 
 const route = useRoute()
 useHead({
