@@ -137,7 +137,6 @@ const formatDisplayDate = (date) => {
   const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
   return `${date.getDate()}-${months[date.getMonth()]}`
 }
-
 const formatDate = (date) => `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}`
 
 const { t } = useI18n()
@@ -171,10 +170,9 @@ function validatePhone() {
 }
 
 if (process.client) {
-  selectedProducts.value = localStorage.getItem('selectedProducts')
-    ? JSON.parse(localStorage.getItem('selectedProducts'))
+  selectedProducts.value = localStorage.getItem('selectedProducts') 
+    ? JSON.parse(localStorage.getItem('selectedProducts')) 
     : []
-
   userData.value.name = localStorage.getItem('order_name') || ''
   userData.value.surname = localStorage.getItem('order_surname') || ''
   userData.value.phone = localStorage.getItem('order_phone') || ''
@@ -186,7 +184,6 @@ watch(() => userData.value.phone, val => localStorage.setItem('order_phone', val
 
 const regionsAll = [
   { name: { en: 'Tashkent', ru: 'Ташкент' }, value: 'toshkent', coordinates: [41.2995, 69.2401] },
-  // ... other regions
 ]
 const regions = computed(() =>
   regionsAll.map(region => ({
@@ -230,6 +227,7 @@ async function handleSubmit() {
     order_payment_text3: t('order_payment_text3'),
     sum: sum.value.toString(),
     products: selectedProducts.value.map(p => ({
+      image: p.main_image,
       name: p.name,
       quantity: p.quantity,
       price: p.discount_price,
@@ -250,50 +248,47 @@ async function handleSubmit() {
   try {
     const telegramToken = '7903740490:AAELqiRtKdirnK1uEEYAaqYsR2lIS2UgmGw'
     const telegramChatId = '-1002509286937'
-
+    const encodedAddress = encodeURIComponent(selectedAddress.value)
     const message = `
 📦 *Получен новый заказ*
 
-👤 Name: ${userData.value.name} ${userData.value.surname}
-📞 Phone: ${userData.value.phone}
+👤 Имя: ${userData.value.name} ${userData.value.surname}
+📞 Телефон: ${userData.value.phone}
 
-🛒 *Products:*
+🛒 *Продукты:*
 ${selectedProducts.value.map(p => `- ${p.name} (x${p.quantity}) – ${p.discount_price} ${t('sum')}`).join('\n')}
-    
-📅 Date: ${formatDate(selectedDate.value)}
-💳 Payment: ${t('order_payment_text3')}
-🧾 Total: ${sum.value} ${t('sum')}
-📍  Address: ${selectedAddress.value}
-`
 
-
-
-
+📅 Дата: ${formatDate(selectedDate.value)}
+💳 Оплата: ${t('order_payment_text3')}
+🧾 Cумма: ${sum.value} ${t('sum')}
+📍 Адрес: ${selectedAddress.value}
+🗺️ [Открыть в Яндекс.Картах](https://yandex.com/maps/?text=${encodedAddress})
+    `
     await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         chat_id: telegramChatId,
         text: message,
-        parse_mode: 'Markdown'
-      })
+        parse_mode: 'Markdown',
+      }),
     })
   } catch (err) {
     console.error('Telegram error:', err)
     toast.error(t('Failed to send Telegram message.'), { position: 'bottom-right' })
   }
 
+  // ✅ Clear cart and form
   selectedProducts.value = []
   localStorage.setItem('selectedProducts', JSON.stringify([]))
+  localStorage.setItem('cartItems', JSON.stringify([]))
+  store.cartItems = []
 
   userData.value = { name: '', surname: '', phone: '', payment: '' }
   selectedRegion.value = { name: 'Ташкент', value: 'toshkent', coordinates: [41.2995, 69.2401] }
   selectedAddress.value = ''
   window.scrollTo(0, 0)
 }
-
 
 function increment(item) {
   item.quantity++
@@ -315,12 +310,14 @@ function removeProduct(item) {
   selectedProducts.value = selectedProducts.value.filter(product => product !== item)
   store.cartItems = store.cartItems.filter(slug => slug !== item.slug)
   localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts.value))
+  localStorage.setItem('cartItems', JSON.stringify(store.cartItems))
 }
 
 useHead({
   link: [{ rel: 'canonical', href: `https://palermo.divspan.uz/${route.path}` }],
 })
 </script>
+
 
 <style scoped>
 .form-error {
