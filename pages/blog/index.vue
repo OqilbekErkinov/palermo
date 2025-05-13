@@ -23,7 +23,7 @@
               </div>
               <div class="header-left__bottom">
                 <div class="header-left__bottom--search">
-                  <input type="text" v-model="search" @input="searchHandler" placeholder="поиск по блогу">
+                  <input type="text" v-model="search" @input="searchHandler" :placeholder="$t('blog search')">
                   <div class="header-left__bottom--icon">
                     <IconsSearch />
                   </div>

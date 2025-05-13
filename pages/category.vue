@@ -8,7 +8,7 @@
               <IconsFilter />
             </div>
             <div class="category-header__search">
-              <input v-model="search" @input="searchPr(1, 'search')" type="text" placeholder="Поисковой запрос...">
+              <input v-model="search" @input="searchPr(1, 'search')" type="text" :placeholder="$t('search query...')">
               <div class="category-header__search--icon">
                 <IconsSearch />
               </div>

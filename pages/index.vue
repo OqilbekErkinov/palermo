@@ -60,7 +60,7 @@
             </div>
             <div class="item">
               <div class="item-search">
-                <input v-model="search" @input="searchHandler" type="text" placeholder="поисковой запрос...">
+                <input v-model="search" @input="searchHandler" type="text" :placeholder="$t('search query')">
                 <div class="item-search__icon">
                   <IconsSearch />
                 </div>
