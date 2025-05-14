@@ -76,7 +76,7 @@
                 {{ lastPage }}
               </div>
               <div :class="{ 'disable': currentPage >= lastPage }"
-                @click="getProducts(categorySlug, minPrice, maxPrice, search, type, currentPage)"
+                @click="getProducts(categorySlug, minPrice, maxPrice, search, type, currentPage + 1)"
                 class="category-content__pagination--item">
                 <IconsArrowRight />
               </div>
@@ -84,7 +84,6 @@
           </div>
         </Transition>
       </div>
-
     </div>
     <div @click.stop class="category-filter" :class="{ active: isFilter }">
       <h3 class="category-filter__title">
@@ -102,22 +101,33 @@
         <div class="category-filter__group--item" v-for="(item, index) in categoryListData?.data?.category_list"
           :key="index">
           <input @input="filtercategory(item.slug, $event)" type="radio" :id="`category-filter__group--item-${index}`"
-            name="category-filter__group--item">
+            name="category-filter__group--item" :checked="categorySlug === item.slug">
           <label :for="`category-filter__group--item-${index}`">{{ item.name }}</label>
         </div>
       </div>
-      <div class="category-filter__group" v-if="min && max">
-        <h2 class="category-filter__group--title">
-          {{ $t('price_range') }}
-        </h2>
-        <div class="category-filter__group--item filter-column">
-          <p class="category-filter__group--item--text">
-            {{ $t('from') }} <span>{{ minPrice }} uzs</span> {{ $t('to') }} <span>{{ maxPrice }} uzs</span>
-          </p>
-          <MultiRangeSlider :ruler="false" :label="false" style="width: 100%;" :minValue="minPrice" :maxValue="maxPrice"
-            :max="max" :min="min" :step="5" :rangeMargin="0" @input="UpdateValues" />
-        </div>
-      </div>
+      <div class="category-filter__group" v-if="showPriceRange">
+    <h2 class="category-filter__group--title">
+      {{ $t('price_range') }}
+    </h2>
+    <div class="category-filter__group--item filter-column">
+      <p class="category-filter__group--item--text">
+        {{ $t('from') }} <span>{{ minPrice }} uzs</span> {{ $t('to') }} <span>{{ maxPrice }} uzs</span>
+      </p>
+      <MultiRangeSlider 
+        v-if="showPriceRange"
+        :ruler="false" 
+        :label="false" 
+        style="width: 100%;" 
+        :min="effectiveMin" 
+        :max="effectiveMax"
+        :minValue="minPrice" 
+        :maxValue="maxPrice" 
+        :step="50000" 
+        :rangeMargin="0" 
+        @input="UpdateValues" 
+      />
+    </div>
+  </div>
     </div>
   </div>
 </template>
@@ -129,62 +139,98 @@ const isFilter = ref(false);
 const config = useRuntimeConfig();
 const { locale } = useI18n();
 const { categoryListData } = useCategoryList();
+
+// Data properties
 const products = ref(null)
 const currentPage = ref(1)
 const lastPage = ref(null)
 const pageCount = ref(null)
 const categorySlug = ref(null)
-const minPrice = ref(null)
-const maxPrice = ref(null)
 const search = ref(null)
 const type = ref('all')
 const loader = ref(false)
+const priceRangeLoaded = ref(false)
+
+// Initialize with safe defaults
+const min = ref(0);
+const max = ref(0);
+const minPrice = ref(0);
+const maxPrice = ref(0);
+const showPriceRange = ref(false);
+
+// Computed properties
+const effectiveMin = computed(() => Math.min(min.value, max.value));
+const effectiveMax = computed(() => {
+  // If min and max are equal, add some reasonable range
+  if (min.value === max.value) {
+    return min.value + 100000; // Add 100,000 UZS range
+  }
+  return Math.max(min.value, max.value);
+});
+
+// Watch for category data to be loaded
+watch(() => categoryListData.value, (newData) => {
+  if (newData?.data?.prices) {
+    min.value = newData.data.prices.min_price || 0;
+    max.value = newData.data.prices.max_price || 1000;
+    minPrice.value = min.value;
+    maxPrice.value = max.value;
+    priceRangeLoaded.value = true;
+  }
+}, { immediate: true, deep: true });
+
 async function getProducts(category_slug, min_price, max_price, search, type, page) {
   loader.value = true;
-  const params = new URLSearchParams();
-  if (category_slug) params.append("category_slug", category_slug);
-  if (min_price) params.append("min_price", min_price);
-  if (max_price) params.append("max_price", max_price);
-  if (search) params.append("search", search);
-  if (type) params.append("type", type);
-  if (page) params.append("page", page);
-  const url = `${config.public.apiBase}/productfilter/${locale.value}/?${params.toString()}`;
-  products.value = await $fetch(url);
-  window.scrollTo(0, 0);
-  currentPage.value = page;
-  pageCount.value = Math.ceil(products?.value?.count / 6) - 1;
-  lastPage.value = pageCount.value + 1;
-  loader.value = false;
+  try {
+    const params = new URLSearchParams();
+    if (category_slug) params.append("category_slug", category_slug);
+    if (min_price) params.append("min_price", min_price);
+    if (max_price) params.append("max_price", max_price);
+    if (search) params.append("search", search);
+    if (type) params.append("type", type);
+    if (page) params.append("page", page);
+    const url = `${config.public.apiBase}/productfilter/${locale.value}/?${params.toString()}`;
+    products.value = await $fetch(url);
+    currentPage.value = page;
+    pageCount.value = Math.ceil(products?.value?.count / 6) - 1;
+    lastPage.value = pageCount.value + 1;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  } finally {
+    loader.value = false;
+  }
 }
 
 
 
-getProducts(categorySlug.value, minPrice.value, maxPrice.value, search.value, type.value, currentPage.value);
-
-const debounceTimer = ref(null)
-async function searchPr() {
-  clearTimeout(debounceTimer.value)
-  debounceTimer.value = setTimeout(() => {
-    getProducts(categorySlug.value, minPrice.value, maxPrice.value, search.value, type.value, currentPage.value)
-  }, 1000);
-}
-
-const min = ref(null);
-const max = ref(null);
-watch(
-  () => categoryListData.value?.data?.prices,
-  (newPrices) => {
-    if (newPrices) {
-      min.value = newPrices.min_price;
-      max.value = newPrices.max_price;
-      minPrice.value = newPrices.min_price;
-      maxPrice.value = newPrices.max_price;
+watch(() => categoryListData.value, (newData) => {
+  if (newData?.data?.prices) {
+    const prices = newData.data.prices;
+    min.value = prices.min_price || 0;
+    max.value = prices.max_price || 0;
+    
+    // Handle case where min and max are equal
+    if (min.value === max.value) {
+      minPrice.value = Math.max(0, min.value - 50000);
+      maxPrice.value = max.value + 50000;
+    } else {
+      minPrice.value = min.value;
+      maxPrice.value = max.value;
     }
-  },
-  { immediate: true }
-);
-const debounceTimer2 = ref(null)
+    
+    showPriceRange.value = true;
+    console.log('Adjusted price range:', {
+      min: min.value,
+      max: max.value,
+      effectiveMin: effectiveMin.value,
+      effectiveMax: effectiveMax.value,
+      minPrice: minPrice.value,
+      maxPrice: maxPrice.value
+    });
+  }
+}, { immediate: true, deep: true });
 
+const debounceTimer2 = ref(null)
 async function UpdateValues(e) {
   clearTimeout(debounceTimer2.value)
   minPrice.value = e.minValue;
@@ -211,6 +257,7 @@ onMounted(() => {
     }
   })
 })
+
 const route = useRoute()
 useHead({
   link: [
