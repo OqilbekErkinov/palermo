@@ -140,7 +140,6 @@ const config = useRuntimeConfig();
 const { locale } = useI18n();
 const { categoryListData } = useCategoryList();
 
-// Data properties
 const products = ref(null)
 const currentPage = ref(1)
 const lastPage = ref(null)
@@ -151,31 +150,35 @@ const type = ref('all')
 const loader = ref(false)
 const priceRangeLoaded = ref(false)
 
-// Initialize with safe defaults
 const min = ref(0);
 const max = ref(0);
 const minPrice = ref(0);
 const maxPrice = ref(0);
 const showPriceRange = ref(false);
 
-// Computed properties
 const effectiveMin = computed(() => Math.min(min.value, max.value));
 const effectiveMax = computed(() => {
-  // If min and max are equal, add some reasonable range
   if (min.value === max.value) {
-    return min.value + 100000; // Add 100,000 UZS range
+    return min.value + 100000;
   }
   return Math.max(min.value, max.value);
 });
 
-// Watch for category data to be loaded
 watch(() => categoryListData.value, (newData) => {
   if (newData?.data?.prices) {
-    min.value = newData.data.prices.min_price || 0;
-    max.value = newData.data.prices.max_price || 1000;
-    minPrice.value = min.value;
-    maxPrice.value = max.value;
-    priceRangeLoaded.value = true;
+    const prices = newData.data.prices;
+    min.value = prices.min_price || 0;
+    max.value = prices.max_price || 0;
+
+    if (min.value === max.value) {
+      minPrice.value = Math.max(0, min.value - 50000);
+      maxPrice.value = max.value + 50000;
+    } else {
+      minPrice.value = min.value;
+      maxPrice.value = max.value;
+    }
+
+    showPriceRange.value = true;
   }
 }, { immediate: true, deep: true });
 
@@ -201,35 +204,6 @@ async function getProducts(category_slug, min_price, max_price, search, type, pa
   }
 }
 
-
-
-watch(() => categoryListData.value, (newData) => {
-  if (newData?.data?.prices) {
-    const prices = newData.data.prices;
-    min.value = prices.min_price || 0;
-    max.value = prices.max_price || 0;
-    
-    // Handle case where min and max are equal
-    if (min.value === max.value) {
-      minPrice.value = Math.max(0, min.value - 50000);
-      maxPrice.value = max.value + 50000;
-    } else {
-      minPrice.value = min.value;
-      maxPrice.value = max.value;
-    }
-    
-    showPriceRange.value = true;
-    console.log('Adjusted price range:', {
-      min: min.value,
-      max: max.value,
-      effectiveMin: effectiveMin.value,
-      effectiveMax: effectiveMax.value,
-      minPrice: minPrice.value,
-      maxPrice: maxPrice.value
-    });
-  }
-}, { immediate: true, deep: true });
-
 const debounceTimer2 = ref(null)
 async function UpdateValues(e) {
   clearTimeout(debounceTimer2.value)
@@ -250,21 +224,24 @@ function clearCategory() {
   getProducts(categorySlug.value, minPrice.value, maxPrice.value, search.value, type.value, currentPage.value);
 }
 
+const route = useRoute()
 onMounted(() => {
   window.addEventListener('click', (e) => {
     if (!(e.target).closest('.category-header__hamb')) {
       isFilter.value = false;
     }
-  })
-})
+  });
 
-const route = useRoute()
+  getProducts(categorySlug.value, minPrice.value, maxPrice.value, search.value, type.value, currentPage.value);
+});
+
 useHead({
   link: [
     { rel: 'canonical', href: `https://palermo.divspan.uz/${route.path}` },
   ]
 })
 </script>
+
 
 <style>
 .multi-range-slider {
