@@ -27,7 +27,7 @@ useSeoMeta({
     { property: 'og:title', content: () => t('meta.ogTitle') },
     { property: 'og:description', content: () => t('meta.ogDescription') },
     { property: 'og:image', content: '/preview.webp' },
-    { property: 'og:url', content: 'https://palermo.divspan.uz' },
+    { property: 'og:url', content: 'https://palermo.uz' },
     { property: 'og:site_name', content: 'Palermo' },
 
     // Twitter Card

@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      apiBase: 'https://palermoapi.divspan.uz/api/v1',
+      apiBase: 'https://palermoapi.uz/api/v1',
     }
   },
   app: {

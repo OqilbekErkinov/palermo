@@ -194,7 +194,7 @@ const handleSubmit = async () => {
 
 const route = useRoute();
 useHead({
-  link: [{ rel: 'canonical', href: `https://palermo.divspan.uz/${route.path}` }]
+  link: [{ rel: 'canonical', href: `https://palermo.uz/${route.path}` }]
 });
 </script>
 

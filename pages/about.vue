@@ -260,7 +260,7 @@ const breakpointsTrust = {
 const route = useRoute()
 useHead({
   link: [
-    { rel: 'canonical', href: `https://palermo.divspan.uz/${route.path}` },
+    { rel: 'canonical', href: `https://palermo.uz/${route.path}` },
   ]
 })
 </script>

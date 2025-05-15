@@ -37,27 +37,27 @@ const props = defineProps({
 })
 const route = useRoute();
 const shareOnTelegram = () => {
-  const url = encodeURIComponent(`https://palermo.divspan.uz/${route.path}`)
+  const url = encodeURIComponent(`https://palermo.uz/${route.path}`)
   const text = encodeURIComponent(props.title);
  window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
 }
 const shareOnTwitter = () => {
-  const url = encodeURIComponent(`https://palermo.divspan.uz/${route.path}`)
+  const url = encodeURIComponent(`https://palermo.uz/${route.path}`)
   const text = encodeURIComponent(props.title);
   window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
 }
 const shareOnFacebook = () => {
-  const url = encodeURIComponent(`https://palermo.divspan.uz/${route.path}`)
+  const url = encodeURIComponent(`https://palermo.uz/${route.path}`)
   const text = encodeURIComponent(props.title);
   window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
 }
 const shareOnWhatsapp = () => {
-  const url = encodeURIComponent(`https://palermo.divspan.uz/${route.path}`)
+  const url = encodeURIComponent(`https://palermo.uz/${route.path}`)
   const text = encodeURIComponent(props.title);
   window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
 };
 const copyToClipboard = () => {
-  navigator.clipboard.writeText(`https://palermo.divspan.uz${route.path}`);
+  navigator.clipboard.writeText(`https://palermo.uz${route.path}`);
   toast.success(t('copied'),
   { position: 'bottom-right' }
   );
