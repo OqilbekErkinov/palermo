@@ -187,7 +187,7 @@ const regionsAll = [
 ]
 const regions = computed(() =>
   regionsAll.map(region => ({
-    ...region,
+    ...region,  
     name: region.name[locale.value] || region.name.ru,
   }))
 )
@@ -262,7 +262,7 @@ ${selectedProducts.value.map(p => `- ${p.name} (x${p.quantity}) – ${p.discount
 💳 Оплата: ${t('order_payment_text3')}
 🧾 Cумма: ${sum.value} ${t('sum')}
 📍 Адрес: ${selectedAddress.value}
-🗺️ [Открыть в Яндекс.Картах]( https://yandex.com/maps/?text=${encodedAddress})
+🗺️ [Открыть в Яндекс.Картах](https://yandex.com/maps/?text=${encodedAddress})
     `
     await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
       method: 'POST',

@@ -180,18 +180,21 @@
   </div>
 </template>
 
-<script lang="js" setup>
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import { Fancybox } from "@fancyapps/ui";
-import "@fancyapps/ui/dist/fancybox/fancybox.css";
-const modules = [Navigation];
-const { blogs } = useBlogs();
-const localePath = useLocalePath();
-Fancybox.bind('[data-fancybox]', {
-});
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue'
+import { useRoute, useRuntimeConfig, useHead } from '#imports'
+import { useI18n } from 'vue-i18n'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+
+const modules = [Navigation]
+const { blogs } = useBlogs()
+const localePath = useLocalePath()
+const config = useRuntimeConfig()
+const { locale } = useI18n()
+
 const breakpoints = {
   480: {
     slidesPerView: 1,
@@ -206,12 +209,11 @@ const breakpoints = {
     spaceBetween: 10,
   },
 }
+
 const isVideoPlayed = ref(true)
 const search = ref(null)
 const searchRes = ref(null)
 const debounceTimer = ref(null)
-const config = useRuntimeConfig()
-const { locale } = useI18n()
 const loader = ref(true)
 
 async function searchHandler() {
@@ -221,18 +223,15 @@ async function searchHandler() {
       loader.value = true
       searchRes.value = await $fetch(`${config.public.apiBase}/searchblog/${locale.value}/?search=${search.value}`)
       loader.value = false
-    }, 1000);
-  }
-  else {
+    }, 1000)
+  } else {
     searchRes.value = null
     loader.value = true
   }
 }
 
-
-
-
 onMounted(() => {
+  // Handles closing search dropdown on outside click
   window.addEventListener('click', (e) => {
     if (!(e.target).closest('.header-left__bottom')) {
       search.value = null
@@ -244,8 +243,6 @@ onMounted(() => {
 
 const route = useRoute()
 useHead({
-  link: [
-    { rel: 'canonical', href: `https://palermo.uz/${route.path}` },
-  ]
+  link: [{ rel: 'canonical', href: `https://palermo.uz/${route.path}` }]
 })
 </script>

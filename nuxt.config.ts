@@ -6,9 +6,12 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@pinia/nuxt',
   ],
+  plugins: [
+    '~/plugins/fancybox.client.ts'
+  ],
   runtimeConfig: {
     public: {
-      apiBase: 'https://palermoapi.uz/api/v1',
+      apiBase: 'https://api.palermo.uz/api/v1',
     }
   },
   app: {

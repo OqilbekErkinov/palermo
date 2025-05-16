@@ -67,6 +67,7 @@
                   <textarea
                     required
                     v-model="message"
+                    maxlength="100"
                     :placeholder="$t('your_message')"
                     class="message-area"
                     rows="3"
@@ -94,46 +95,70 @@
 </template>
 
 <script lang="ts" setup>
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
-import emailjs from 'emailjs-com';
+import { ref, onMounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRoute, useHead } from '#imports'
+import emailjs from 'emailjs-com'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
+const name = ref('')
+const email = ref('')
+const phone = ref('')
+const message = ref('')
 
-const name = ref(localStorage.getItem('contact_name') || '');
-const email = ref(localStorage.getItem('contact_email') || '');
-const phone = ref(localStorage.getItem('contact_phone') || '');
-const message = ref('');
+const nameError = ref('')
+const emailError = ref('')
+const phoneError = ref('')
 
-const nameError = ref('');
-const emailError = ref('');
-const phoneError = ref('');
+const { t } = useI18n()
+const route = useRoute()
+const { footerData } = useFooter()
 
-const { t } = useI18n();
-const { footerData } = useFooter();
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    name.value = localStorage.getItem('contact_name') || ''
+    email.value = localStorage.getItem('contact_email') || ''
+    phone.value = localStorage.getItem('contact_phone') || ''
+  }
+})
+
+if (typeof window !== 'undefined') {
+  watch([name, email, phone], ([newName, newEmail, newPhone]) => {
+    localStorage.setItem('contact_name', newName || '')
+    localStorage.setItem('contact_email', newEmail || '')
+    localStorage.setItem('contact_phone', newPhone || '')
+  })
+}
 
 const validateName = () => {
-  const namePattern = /^[A-Za-z\u0400-\u04FF\s'-]+$/;
-  nameError.value = namePattern.test(name.value) ? '' : t('letters only');
-};
+  const namePattern = /^[A-Za-z\u0400-\u04FF\s'-]+$/
+  nameError.value = namePattern.test(name.value) ? '' : t('letters only')
+}
 
 const validateEmail = () => {
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  emailError.value = emailPattern.test(email.value) ? '' : t('enter valid email');
-};
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  emailError.value = emailPattern.test(email.value) ? '' : t('enter valid email')
+}
 
 const validatePhone = () => {
-  const phonePattern = /^\+998\d{9}$/;
-  phoneError.value = phonePattern.test(phone.value) ? '' : t('phone format is wrong');
-};
+  const phonePattern = /^\+998\d{9}$/
+  phoneError.value = phonePattern.test(phone.value) ? '' : t('phone format is wrong')
+}
+
+const isFormValid = () => {
+  validateName()
+  validateEmail()
+  validatePhone()
+
+  const allFilled = name.value && email.value && phone.value && message.value
+  return !nameError.value && !emailError.value && !phoneError.value && allFilled
+}
 
 const handleSubmit = async () => {
-  validateName();
-  validateEmail();
-  validatePhone();
-
-  if (nameError.value || emailError.value || phoneError.value) {
-    toast.error(t('fill_all_fields'), { position: 'bottom-right' });
-    return;
+  if (!isFormValid()) {
+    toast.error(t('fill_all_fields'), { position: 'bottom-right' })
+    return
   }
 
   const params = {
@@ -141,62 +166,50 @@ const handleSubmit = async () => {
     contact_email: email.value,
     contact_phone: phone.value,
     contact_message: message.value
-  };
+  }
 
-  // ✅ 1. Send to Email
   try {
-    await emailjs.send('service_oxl7nhp', 'template_apbj5gi', params, 'C30GeIItXYu1hokzC');
-    toast.success(t('message_sent_successfully'), { position: 'bottom-right' });
+    await emailjs.send('service_oxl7nhp', 'template_apbj5gi', params, 'C30GeIItXYu1hokzC')
+    toast.success(t('message_sent_successfully'), { position: 'bottom-right' })
 
-    // Save to localStorage
-    localStorage.setItem('contact_name', name.value);
-    localStorage.setItem('contact_email', email.value);
-    localStorage.setItem('contact_phone', phone.value);
-
-    // ✅ 2. Send to Telegram
-    const telegramToken = '7903740490:AAELqiRtKdirnK1uEEYAaqYsR2lIS2UgmGw';
-    const telegramChatId = '-1002509286937';
-
+    const telegramToken = 'YOUR_TELEGRAM_BOT_TOKEN'
+    const telegramChatId = 'YOUR_TELEGRAM_CHAT_ID'
     const telegramMessage = `
-📬 *Новое сообщение с контактной формы*
+📬 *New Contact Form Message*
 
-👤 Имя: ${name.value}
+👤 Name: ${name.value}
 📧 Email: ${email.value}
-📞 Телефон: ${phone.value}
+📞 Phone: ${phone.value}
 
-📝 Сообщение: 
-    ${message.value}
-`;
+📝 Message:
+${message.value}
+`
 
     await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         chat_id: telegramChatId,
         text: telegramMessage,
         parse_mode: 'Markdown'
       })
-    });
+    })
 
-    // ✅ Clear form
-    name.value = '';
-    email.value = '';
-    phone.value = '';
-    message.value = '';
+    name.value = ''
+    email.value = ''
+    phone.value = ''
+    message.value = ''
   } catch (error) {
-    console.error('Submission error:', error);
-    toast.error(t('error_occurred'), { position: 'bottom-right' });
+    console.error('Submission error:', error)
+    toast.error(t('error_occurred'), { position: 'bottom-right' })
   }
-};
+}
 
-
-const route = useRoute();
 useHead({
-  link: [{ rel: 'canonical', href: `https://palermo.uz/${route.path}` }]
-});
+  link: [{ rel: 'canonical', href: `https://palermo.uz${route.path}` }]
+})
 </script>
+
 
 <style scoped>
 .form-error {
