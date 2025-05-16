@@ -95,7 +95,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useHead } from '#imports'
 import emailjs from 'emailjs-com'
@@ -115,22 +115,7 @@ const { t } = useI18n()
 const route = useRoute()
 const { footerData } = useFooter()
 
-onMounted(() => {
-  if (typeof window !== 'undefined') {
-    name.value = localStorage.getItem('contact_name') || ''
-    email.value = localStorage.getItem('contact_email') || ''
-    phone.value = localStorage.getItem('contact_phone') || ''
-  }
-})
-
-if (typeof window !== 'undefined') {
-  watch([name, email, phone], ([newName, newEmail, newPhone]) => {
-    localStorage.setItem('contact_name', newName || '')
-    localStorage.setItem('contact_email', newEmail || '')
-    localStorage.setItem('contact_phone', newPhone || '')
-  })
-}
-
+// ✅ Validation
 const validateName = () => {
   const namePattern = /^[A-Za-z\u0400-\u04FF\s'-]+$/
   nameError.value = namePattern.test(name.value) ? '' : t('letters only')
@@ -172,16 +157,17 @@ const handleSubmit = async () => {
     await emailjs.send('service_oxl7nhp', 'template_apbj5gi', params, 'C30GeIItXYu1hokzC')
     toast.success(t('message_sent_successfully'), { position: 'bottom-right' })
 
-    const telegramToken = 'YOUR_TELEGRAM_BOT_TOKEN'
-    const telegramChatId = 'YOUR_TELEGRAM_CHAT_ID'
+    // ✅ Send to Telegram
+    const telegramToken = '7903740490:AAELqiRtKdirnK1uEEYAaqYsR2lIS2UgmGw'
+    const telegramChatId = '-1002509286937'
     const telegramMessage = `
-📬 *New Contact Form Message*
+📬 *Новое сообщение контактной формы*
 
-👤 Name: ${name.value}
-📧 Email: ${email.value}
-📞 Phone: ${phone.value}
+👤 Имя: ${name.value}
+📧 Электронная почта: ${email.value}
+📞 Телефон: ${phone.value}
 
-📝 Message:
+📝 Сообщение:
 ${message.value}
 `
 
@@ -195,6 +181,7 @@ ${message.value}
       })
     })
 
+    // ✅ Clear form after sending
     name.value = ''
     email.value = ''
     phone.value = ''
