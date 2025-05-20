@@ -63,7 +63,7 @@
     }
 
     &-title {
-      max-width: 800px;
+      // max-width: 800px;
       @include font(102px, 100%, 400);
 
       @include media($xxl) {
