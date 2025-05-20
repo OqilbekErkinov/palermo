@@ -26,13 +26,22 @@
     max-width: 90%;
     margin: 0 auto;
   }
+  
+  .polupar {
+    @include fit(cover);
+    border-radius: 70px;
+
+    @include media($xl) {
+      border-radius: 70px;
+    }
+  }
 
   img {
     @include fit(cover);
-    border-radius: 40px;
+    // border-radius: 40px;
 
     @include media($xl) {
-      border-radius: 40px;
+      // border-radius: 40px;
     }
   }
 
@@ -53,10 +62,11 @@
 
   &__product {
     position: absolute;
-    bottom: 0;
+    bottom: -2rem;
     left: 0%;
     transform: translateX(-25%);
-    width: 240px;
+    width: 200px;
+    // height: 150px;
 
     @include media($xxl) {
       width: 200px;
@@ -68,7 +78,9 @@
     }
 
     img {
-      @include fit(cover);
+      width: 200px;
+      // height: 150px;
+      object-fit: cover;
     }
   }
 }

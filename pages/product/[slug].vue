@@ -62,7 +62,7 @@
                 <div class="one-count">
                   <div class="one-count__dec" @click="decrement">-</div>
                   <div class="one-count__num">{{ quantity }}</div>
-                  <div class="one-count__inc" @click="increment">+</div>
+                  <div class="one-count__inc" style="padding-top: -20px" @click="increment">+</div>
                 </div>
                 <div class="one-bottom"  
                 @click.stop.prevent="cartStore.toggleCart(product?.product?.slug)">

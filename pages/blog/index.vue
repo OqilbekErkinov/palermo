@@ -16,7 +16,7 @@
             </div>
             <div class="header-left__content">
               <div class="header-left__top">
-                <h2 class="header-left__title">{{ blogs?.data?.data?.blog?.main_title }}</h2>
+                <h2 class="header-left__title">{{ blogs?.data?.data?.blog?.title }}</h2>
                 <p class="header-left__desc">
                   {{ blogs?.data?.data?.blog?.description }}
                 </p>

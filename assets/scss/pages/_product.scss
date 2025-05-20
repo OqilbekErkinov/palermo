@@ -416,6 +416,7 @@
             display: grid;
             place-items: center;
             cursor: pointer;
+            padding-bottom: 0.4rem;
 
             @include media($lg) {
               @include font(24px, 100%, 600);

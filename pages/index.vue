@@ -19,9 +19,7 @@
                 <div class="card-left__icon" :style="{
                   backgroundImage: `url(${homePageData?.data?.home_data?.color_image_1})`
                 }"></div>
-                <div class="card-left__icon" :style="{
-                  backgroundImage: `url(${homePageData?.data?.home_data?.color_image_2})`
-                }"></div>
+                <div class="card-left__icon"></div>
               </div>
               <p class="card-left__text">
                 {{ homePageData?.data?.home_data?.description }}
@@ -270,6 +268,10 @@
                     </p>
                     <p class="odd-info__desc">
                       {{ item?.description }}
+                      Читать полностью...
+                    </p>
+                    <p class="odd-info__desc" style="color: black;">
+                      Читать полностью...
                     </p>
                   </div>
                 </div>
@@ -290,7 +292,9 @@
                   <p class="even-info__desc">
                     {{ item?.description }}
                   </p>
-
+                  <p class="odd-info__desc" style="color: white;">
+                      Читать полностью...
+                    </p>
                 </div>
               </div>
               <div class="even-arrow">

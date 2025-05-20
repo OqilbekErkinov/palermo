@@ -1,6 +1,6 @@
 <template>
   <div class="popular-card">
-    <img loading="lazy" :src="props.popularData?.image1" alt="img">
+    <img class="polupar" loading="lazy" :src="props.popularData?.image1" alt="img">
     <button aria-label="Button" class="popular-card__heart" :class="{ active: store.favoriteItems.includes(props.popularData?.slug) }"
       @click.stop.prevent="store.toggleFavorite(props.popularData?.slug)">
       <IconsHeart />
