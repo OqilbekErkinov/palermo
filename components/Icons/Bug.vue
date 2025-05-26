@@ -1,5 +1,5 @@
 <template>
-  <img loading="lazy" :src="iconSrc" alt="Img" />
+  <img class="bugg" loading="lazy" :src="iconSrc" alt="Img" />
 </template>
 
 <script setup>
@@ -10,7 +10,8 @@ const props = defineProps({
 
 const iconSrc = computed(() =>
   props.inCart
-    ? new URL('~/assets/images/png/cart2.png', import.meta.url).href
-    : new URL('~/assets/images/png/cart1.png', import.meta.url).href
+    ? new URL('@/assets/images/png/cart2.png', import.meta.url).href
+    : new URL('@/assets/images/png/cart1.png', import.meta.url).href
 );
 </script>
+
