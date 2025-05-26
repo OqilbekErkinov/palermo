@@ -36,13 +36,13 @@
 
     &--item {
       position: absolute;
-      bottom: -1.7rem;
-      left: -1.7rem;
+      bottom: -1rem;
+      left: -1rem;
       z-index: 2;
-      width: 270px;
+      width: 265px;
 
       @include media($xxl) {
-        width: 140px;
+        width: 165px;
       }
 
       @include media($sm) {
