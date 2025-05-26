@@ -151,13 +151,23 @@
         width: 26px;
         height: 26px;
       }
-
       @include media($sm) {
         width: 20px;
         height: 20px;
       }
     }
   }
+      img {
+      @include media($xxl) {
+        // width: 26px;
+        height: 26px;
+      }
+      @include media($sm) {
+        // width: 20px;
+        height: 20px;
+      }
+    }
+
 
   &__desc {
     margin-top: 12px;

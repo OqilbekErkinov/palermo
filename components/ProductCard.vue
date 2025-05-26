@@ -18,8 +18,9 @@
           <button aria-label="Button" style="cursor: pointer" class="product-card__bug"
             @click.stop.prevent="cartStore.toggleCart(props.product?.slug)"
             :class="{ active: cartStore.cartItems.includes(props.product?.slug) }">
-            <IconsBug />
+            <IconsBug :inCart="cartStore.cartItems.includes(props.product?.slug)" />
           </button>
+
         </div>
       </div>
       <p class="product-card__desc">
