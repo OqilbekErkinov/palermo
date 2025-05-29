@@ -1,10 +1,13 @@
 <template>
   <main class="index">
-    <header class="header" :style="{
-      background: `linear-gradient(270deg,
+    <header
+      class="header"
+      :style="{
+        background: `linear-gradient(270deg,
         rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0.5) 100%) , url(${homePageData?.data?.home_data?.image}) no-repeat center/cover`
-    }">
+        rgba(0, 0, 0, 0.5) 100%) , url(${homePageData?.data?.home_data?.image}) no-repeat center/cover`,
+      }"
+    >
       <div class="container">
         <h1 class="header-title">
           {{ homePageData?.data?.home_data?.title }}
@@ -16,9 +19,12 @@
           <div class="header-content__cards">
             <div class="header-content__card card-left">
               <div class="card-left__icons">
-                <div class="card-left__icon" :style="{
-                  backgroundImage: `url(${homePageData?.data?.home_data?.color_image_1})`
-                }"></div>
+                <div
+                  class="card-left__icon"
+                  :style="{
+                    backgroundImage: `url(${homePageData?.data?.home_data?.color_image_1})`,
+                  }"
+                ></div>
                 <div class="card-left__icon"></div>
               </div>
               <p class="card-left__text">
@@ -30,7 +36,11 @@
                 {{ homePageData?.data?.home_data?.minititle }}
               </p>
               <div class="card-right__bottom">
-                <BaseTranspatentButton>{{ $t('go_to_catalog') }}</BaseTranspatentButton>
+                <NuxtLink :to="localePath('/category')">
+                  <BaseTranspatentButton>{{
+                    $t("go_to_catalog")
+                  }}</BaseTranspatentButton>
+                </NuxtLink>
                 <BasePointerTop :translate="`-15px`" />
               </div>
             </div>
@@ -54,28 +64,48 @@
               <p class="item-text">
                 {{ homePageData?.data?.home_data?.about_description }}
               </p>
-              <BaseTranspatentButton>{{ $t('about') }}</BaseTranspatentButton>
+              <NuxtLink :to="localePath('/about')">
+                <BaseTranspatentButton>{{ $t("about") }}</BaseTranspatentButton>
+              </NuxtLink>
             </div>
             <div class="item">
               <div class="item-search">
-                <input v-model="search" @input="searchHandler" type="text" :placeholder="$t('search query')">
+                <input
+                  v-model="search"
+                  @input="searchHandler"
+                  type="text"
+                  :placeholder="$t('search query')"
+                />
                 <div class="item-search__icon">
                   <IconsSearch />
                 </div>
                 <div class="item-search__res" v-if="search">
-                  <div v-if="searchRes?.data?.length > 0 && !loader" class="item-search__list">
-                    <NuxtLink v-for="item in searchRes?.data" :key="item.slug" class="item-search__title"
-                      :to="localePath(`/${item.type === 'blog' ? 'blog' : 'product'}/${item.slug}`)">
+                  <div
+                    v-if="searchRes?.data?.length > 0 && !loader"
+                    class="item-search__list"
+                  >
+                    <NuxtLink
+                      v-for="item in searchRes?.data"
+                      :key="item.slug"
+                      class="item-search__title"
+                      :to="
+                        localePath(
+                          `/${item.type === 'blog' ? 'blog' : 'product'}/${
+                            item.slug
+                          }`
+                        )
+                      "
+                    >
                       {{ item.name }}
                     </NuxtLink>
                   </div>
                   <div v-else-if="!loader && !searchRes?.data?.length">
                     <p class="item-search__title">
-                      {{ $t('list_empty') }}
+                      {{ $t("list_empty") }}
                     </p>
                   </div>
                   <p v-else-if="loader" class="item-search__title">
-                    {{ $t('loading') }}
+                    {{ $t("loading") }}
                   </p>
                 </div>
               </div>
@@ -85,10 +115,10 @@
                   <div class="card-header">
                     <div class="card__header__left">
                       <h1 class="card-header__title">
-                        {{ $t('about1') }}
+                        {{ $t("about1") }}
                       </h1>
                       <p class="card-header__text">
-                        {{ $t('about1_desc') }}
+                        {{ $t("about1_desc") }}
                       </p>
                     </div>
                     <div class="card-header__right">
@@ -96,17 +126,21 @@
                     </div>
                   </div>
                   <div class="card-img">
-                    <img  loading="lazy" src="~/assets/images/png/inspiration-img1.png" alt="img">
+                    <img
+                      loading="lazy"
+                      src="~/assets/images/png/inspiration-img1.png"
+                      alt="img"
+                    />
                   </div>
                 </div>
                 <div class="card">
                   <div class="card-header">
                     <div class="card__header__left">
                       <h1 class="card-header__title">
-                        {{ $t('about2') }}
+                        {{ $t("about2") }}
                       </h1>
                       <p class="card-header__text">
-                        {{ $t('about2_desc') }}
+                        {{ $t("about2_desc") }}
                       </p>
                     </div>
                     <div class="card-header__right">
@@ -114,17 +148,21 @@
                     </div>
                   </div>
                   <div class="card-img">
-                    <img  loading="lazy" src="~/assets/images/png/inspiration-img2.png" alt="img">
+                    <img
+                      loading="lazy"
+                      src="~/assets/images/png/inspiration-img2.png"
+                      alt="img"
+                    />
                   </div>
                 </div>
                 <div class="card">
                   <div class="card-header">
                     <div class="card__header__left">
                       <h1 class="card-header__title">
-                        {{ $t('about3') }}
+                        {{ $t("about3") }}
                       </h1>
                       <p class="card-header__text">
-                        {{ $t('about3_desc') }}
+                        {{ $t("about3_desc") }}
                       </p>
                     </div>
                     <div class="card-header__right">
@@ -132,7 +170,11 @@
                     </div>
                   </div>
                   <div class="card-img">
-                    <img  loading="lazy" src="~/assets/images/png/inspiration-img3.png" alt="img">
+                    <img
+                      loading="lazy"
+                      src="~/assets/images/png/inspiration-img3.png"
+                      alt="img"
+                    />
                   </div>
                 </div>
               </div>
@@ -148,15 +190,18 @@
     <section class="why">
       <div class="container">
         <h1 class="why-title">
-          {{ $t('why_select') }}
+          {{ $t("why_select") }}
         </h1>
         <div class="why-content">
           <div class="why-card">
-            <img  loading="lazy" :src="homePageData?.data?.home_data?.image1" alt="img">
+            <img
+              loading="lazy"
+              :src="homePageData?.data?.home_data?.image1"
+              alt="img"
+            />
             <div class="why-card__content">
               <p class="why-card__title">
                 {{ homePageData?.data?.home_data?.image1_title }}
-
               </p>
               <p class="why-card__text">
                 {{ homePageData?.data?.home_data?.image1_description }}
@@ -164,7 +209,11 @@
             </div>
           </div>
           <div class="why-card">
-            <img  loading="lazy" :src="homePageData?.data?.home_data?.image2" alt="img">
+            <img
+              loading="lazy"
+              :src="homePageData?.data?.home_data?.image2"
+              alt="img"
+            />
             <div class="why-card__content">
               <p class="why-card__title">
                 {{ homePageData?.data?.home_data?.image2_title }}
@@ -175,7 +224,11 @@
             </div>
           </div>
           <div class="why-card">
-            <img  loading="lazy" :src="homePageData?.data?.home_data?.image3" alt="img">
+            <img
+              loading="lazy"
+              :src="homePageData?.data?.home_data?.image3"
+              alt="img"
+            />
             <div class="why-card__content">
               <p class="why-card__title">
                 {{ homePageData?.data?.home_data?.image3_title }}
@@ -186,7 +239,11 @@
             </div>
           </div>
           <div class="why-card">
-            <img  loading="lazy" :src="homePageData?.data?.home_data?.image4" alt="img">
+            <img
+              loading="lazy"
+              :src="homePageData?.data?.home_data?.image4"
+              alt="img"
+            />
             <div class="why-card__content">
               <p class="why-card__title">
                 {{ homePageData?.data?.home_data?.image4_title }}
@@ -198,7 +255,11 @@
           </div>
         </div>
         <div class="why-img">
-          <img  loading="lazy"  src="~/assets/images/png/why-logo.png" alt="img">
+          <img
+            loading="lazy"
+            src="~/assets/images/png/why-logo.png"
+            alt="img"
+          />
         </div>
       </div>
     </section>
@@ -206,21 +267,26 @@
     <section class="popular">
       <div class="container">
         <h1 class="popular-title">
-          {{ $t('popular_product') }}
+          {{ $t("popular_product") }}
         </h1>
         <div class="popular-content">
-          <NuxtLink :to="localePath(`/product/${item?.slug}`)" v-for="item in homePageData?.data?.popular_products"
-            :key="item">
+          <NuxtLink
+            :to="localePath(`/product/${item?.slug}`)"
+            v-for="item in homePageData?.data?.popular_products"
+            :key="item"
+          >
             <PopularCard :popularData="item" />
           </NuxtLink>
         </div>
         <div class="popular-bottom">
           <p class="popular-bottom__text">
-            {{ $t('popular_bottom_desc') }}
+            {{ $t("popular_bottom_desc") }}
           </p>
           <div class="popular-bottom__wrapper">
             <NuxtLink :to="localePath('/category')">
-              <BaseTranspatentButton>{{ $t('go_to_catalog') }}</BaseTranspatentButton>
+              <BaseTranspatentButton>{{
+                $t("go_to_catalog")
+              }}</BaseTranspatentButton>
             </NuxtLink>
             <BasePointerTop :translate="`-15px`" />
           </div>
@@ -231,11 +297,11 @@
     <section class="articles">
       <div class="container">
         <h2 class="articles-title">
-          {{ $t('blog_title') }}
+          {{ $t("blog_title") }}
         </h2>
         <div class="articles-header">
           <p class="articles-header__desc">
-            {{ $t('blog_desc') }}
+            {{ $t("blog_desc") }}
           </p>
           <div class="articles-header__arrows">
             <button aria-label="Button" class="articles-header__arrows--left">
@@ -246,13 +312,26 @@
             </button>
           </div>
         </div>
-        <Swiper :modules="modules"
-          :navigation="{ nextEl: '.articles-header__arrows--right', prevEl: '.articles-header__arrows--left', disabledClass: 'disabled' }"
-          :breakpoints="breakpoints">
-          <SwiperSlide v-for="(item, index) in homePageData?.data?.blogs" :key="item">
-            <NuxtLink :to="localePath(`/blog/${item?.slug}`)" class="article odd" v-if="index % 2 === 0">
+        <Swiper
+          :modules="modules"
+          :navigation="{
+            nextEl: '.articles-header__arrows--right',
+            prevEl: '.articles-header__arrows--left',
+            disabledClass: 'disabled',
+          }"
+          :breakpoints="breakpoints"
+        >
+          <SwiperSlide
+            v-for="(item, index) in homePageData?.data?.blogs"
+            :key="item"
+          >
+            <NuxtLink
+              :to="localePath(`/blog/${item?.slug}`)"
+              class="article odd"
+              v-if="index % 2 === 0"
+            >
               <div class="odd-content">
-                <img  loading="lazy" :src="item?.main_image" alt="img">
+                <img loading="lazy" :src="item?.main_image" alt="img" />
               </div>
               <div class="odd-info">
                 <div class="odd-info__in">
@@ -270,20 +349,24 @@
                       {{ item?.description }}
                       Читать полностью...
                     </p>
-                    <p class="odd-info__desc" style="color: black;">
+                    <p class="odd-info__desc" style="color: black">
                       Читать полностью...
                     </p>
                   </div>
                 </div>
               </div>
             </NuxtLink>
-            <NuxtLink :to="localePath(`/blog/${item?.slug}`)" class="article even" v-if="index % 2 === 1">
+            <NuxtLink
+              :to="localePath(`/blog/${item?.slug}`)"
+              class="article even"
+              v-if="index % 2 === 1"
+            >
               <div class="even-bg">
                 <ShapesIndexArticleBig />
               </div>
               <div class="even-content">
                 <div class="even-img">
-                  <img  loading="lazy" :src="item?.main_image" alt="img">
+                  <img loading="lazy" :src="item?.main_image" alt="img" />
                 </div>
                 <div class="even-info">
                   <p class="even-info__title">
@@ -292,9 +375,9 @@
                   <p class="even-info__desc">
                     {{ item?.description }}
                   </p>
-                  <p class="odd-info__desc" style="color: white;">
-                      Читать полностью...
-                    </p>
+                  <p class="odd-info__desc" style="color: white">
+                    Читать полностью...
+                  </p>
                 </div>
               </div>
               <div class="even-arrow">
@@ -305,7 +388,9 @@
         </Swiper>
         <div class="articles-bottom">
           <NuxtLink :to="localePath('/blog')">
-            <BaseTranspatentButton>{{ $t('blog_mini_title') }}</BaseTranspatentButton>
+            <BaseTranspatentButton>{{
+              $t("blog_mini_title")
+            }}</BaseTranspatentButton>
           </NuxtLink>
           <BasePointerTop :translate="`-15px`" />
         </div>
@@ -374,4 +459,3 @@ useHead({
   ]
 })
 </script>
-
