@@ -567,7 +567,7 @@
         position: relative;
         z-index: 1;
         transform: rotate(-3deg);
-        transition: all 0.3s ease-in-out;
+        transition: all 0.6s ease-in-out;
 
         @include media($sm) {
           transform: rotate(0);
@@ -576,6 +576,7 @@
 
         &:hover {
           transform: rotate(0);
+          z-index: 6 !important;
         }
 
         &:first-child {

@@ -148,17 +148,50 @@
               </div>
               <form @submit.prevent="handleSubmit" class="card-item form">
                 <div class="form-item">
-                  <input required v-model="name" :placeholder="$t('your_name')" type="text">
+                  <input
+                    required
+                    v-model="name"
+                    @input="validateName"
+                    :placeholder="$t('your_name')"
+                    type="text"
+                    autocomplete="name"
+                  />
+                  <p v-if="nameError" class="form-error">{{ nameError }}</p>
                 </div>
                 <div class="form-item">
-                  <input required v-model="email" :placeholder="$t('your_email')" type="email">
+                  <input
+                    required
+                    v-model="email"
+                    @input="validateEmail"
+                    :placeholder="$t('your_email')"
+                    type="email"
+                    autocomplete="email"
+                  />
+                  <p v-if="emailError" class="form-error">{{ emailError }}</p>
                 </div>
                 <div class="form-item">
-                  <input required v-model="phone" :placeholder="$t('your_phone')" type="phone">
+                  <input
+                    required
+                    v-model="phone"
+                    @input="validatePhone"
+                    :placeholder="$t('your_phone')"
+                    type="tel"
+                    autocomplete="tel"
+                  />
+                  <p v-if="phoneError" class="form-error">{{ phoneError }}</p>
                 </div>
                 <div class="form-item">
-                  <input required v-model="message" :placeholder="$t('your_message')" type="text">
+                  <textarea
+                    required
+                    v-model="message"
+                    maxlength="100"
+                    :placeholder="$t('your_message')"
+                    class="message-area"
+                    rows="3"
+                    type="text"
+                  ></textarea>
                 </div>
+
                 <div class="form-item form-btn">
                   <BaseTranspatentButton>{{ $t('send') }}</BaseTranspatentButton>
                   <BasePointerTop :bg="`white`" :translate="`-15px`" />
@@ -183,29 +216,59 @@ const email = ref('')
 const phone = ref('')
 const message = ref('')
 const {t} = useI18n();
+const nameError = ref('')
+const emailError = ref('')
+const phoneError = ref('')
+
+
+// ✅ Validation
+const validateName = () => {
+  const namePattern = /^[A-Za-z\u0400-\u04FF\s'-]+$/
+  nameError.value = namePattern.test(name.value) ? '' : t('letters only')
+}
+
+const validateEmail = () => {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  emailError.value = emailPattern.test(email.value) ? '' : t('enter valid email')
+}
+
+const validatePhone = () => {
+  const phonePattern = /^\+998\d{9}$/
+  phoneError.value = phonePattern.test(phone.value) ? '' : t('phone format is wrong')
+}
+
+const isFormValid = () => {
+  validateName()
+  validateEmail()
+  validatePhone()
+
+  const allFilled = name.value && email.value && phone.value && message.value
+  return !nameError.value && !emailError.value && !phoneError.value && allFilled
+}
+
 const handleSubmit = async () => {
   if (!name.value || !email.value || !phone.value || !message.value) {
     alert("Please fill in all fields");
     return;
   }
 
-  const params = {
-    to_name: 'Palermo',
-    from_name: name.value,
-    message: `Name: ${name.value}
-Email: ${email.value}
-Phone: ${phone.value}
-Message: ${message.value}`
-  };
+//   const params = {
+//     to_name: 'Palermo',
+//     from_name: name.value,
+//     message: `Name: ${name.value}
+// Email: ${email.value}
+// Phone: ${phone.value}
+// Message: ${message.value}`
+//   };
 
   // ✅ 1. Send Email via EmailJS
   try {
-    await emailjs.send(
-      'service_b0ehtia',
-      'template_h0hee6a',
-      params,
-      'TpeL7NyK9cxswwzLp'
-    );
+    // await emailjs.send(
+    //   'service_b0ehtia',
+    //   'template_h0hee6a',
+    //   params,
+    //   'TpeL7NyK9cxswwzLp'
+    // );
 
     // ✅ 2. Send to Telegram Group
     const telegramToken = '7903740490:AAELqiRtKdirnK1uEEYAaqYsR2lIS2UgmGw';
@@ -257,5 +320,21 @@ useHead({
 <style scoped>
 :global(.Toastify__toast-container--bottom-right) {
   margin-bottom: -1.5rem;
+}
+.form-error {
+  color: red;
+  font-size: 12px;
+  margin-top: 2px;
+  margin-bottom: -10px;
+}
+.message-area {
+  width: 100%;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-height: 50px;
 }
 </style>
