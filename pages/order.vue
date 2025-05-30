@@ -55,7 +55,7 @@
             </NuxtLink>
           </div>
 
-          <!-- Delivery Date with Calendar -->
+          <!-- Delivery Date and Time -->
           <div class="order-form__item">
             <label style="margin-bottom: 0.7rem">{{
               $t("order_date_title")
@@ -68,6 +68,7 @@
                 :locale="locale.value"
                 :monday-first="true"
                 :min-date="new Date()"
+                :enable-time-picker="false"
                 auto-apply
                 hide-input-icon
                 :format="formatDate"
@@ -77,20 +78,25 @@
               />
             </div>
 
-            <!-- TIME INPUT BELOW -->
-            <!-- TIME INPUT BELOW -->
+            <!-- TIME PICKER (custom time range input) -->
             <div
               class="datepicker-wrapper datepicker"
               style="margin-top: 0.8rem"
             >
-              <input
-                v-model="selectedTime"
-                class="custom-date-input"
-                type="text"
-                inputmode="text"
+              <Datepicker
+                v-model="selectedTimeRange"
+                time-picker
+                :is24="true"
+                :range="true"
+                format="HH:mm"
+                auto-apply
                 placeholder="10:00–22:00"
+                input-class="custom-date-input"
+                calendar-class="custom-calendar"
+                menu-class="dp-menu-styled"
               />
             </div>
+
             <p v-if="timeError" class="form-error">{{ timeError }}</p>
           </div>
 
@@ -221,13 +227,33 @@ import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { useI18n } from "vue-i18n";
 import { useCartStore } from "~/store/addToCart";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+emailjs.init("C30GeIItXYu1hokzC");
 
 const selectedDate = ref(new Date());
 const selectedTime = ref("");
 const timeError = ref("");
+
+const selectedTimeRange = ref([]);
+const formattedTimeRange = computed(() => {
+  if (
+    Array.isArray(selectedTimeRange.value) &&
+    selectedTimeRange.value.length === 2 &&
+    selectedTimeRange.value[0]?.hours != null &&
+    selectedTimeRange.value[1]?.hours != null
+  ) {
+    const format = (t) =>
+      `${t.hours.toString().padStart(2, "0")}:${t.minutes
+        .toString()
+        .padStart(2, "0")}`;
+    return `${format(selectedTimeRange.value[0])}–${format(
+      selectedTimeRange.value[1]
+    )}`;
+  }
+  return "—";
+});
 
 const formatDisplayDate = (date) => {
   const months = [
@@ -285,7 +311,6 @@ function validatePhone() {
     : t("phone format is wrong");
 }
 
-
 if (process.client) {
   selectedProducts.value = localStorage.getItem("selectedProducts")
     ? JSON.parse(localStorage.getItem("selectedProducts"))
@@ -337,13 +362,16 @@ async function handleSubmit() {
   validateName();
   validateSurname();
   validatePhone();
-  if (!selectedTime.value.trim()) {
-  timeError.value = t("fill_all_fields");
-  toast.error(t("fill_all_fields"), { position: "bottom-right" });
-  return;
-} else {
-  timeError.value = "";
-}
+  if (
+    !Array.isArray(selectedTimeRange.value) ||
+    selectedTimeRange.value.length !== 2 ||
+    !selectedTimeRange.value[0] ||
+    !selectedTimeRange.value[1]
+  ) {
+    timeError.value = t("fill_all_fields");
+    toast.error(t("fill_all_fields"), { position: "bottom-right" });
+    return;
+  }
 
   if (nameError.value || surnameError.value || phoneError.value) {
     toast.error(t("fill_all_fields"), { position: "bottom-right" });
@@ -394,6 +422,7 @@ async function handleSubmit() {
     const telegramToken = "7903740490:AAELqiRtKdirnK1uEEYAaqYsR2lIS2UgmGw";
     const telegramChatId = "-1002509286937";
     const encodedAddress = encodeURIComponent(selectedAddress.value);
+    console.log("selectedTimeRange", selectedTimeRange.value); // 👈 ADD
     const message = `
 📦 *Получен новый заказ*
 
@@ -405,7 +434,7 @@ ${selectedProducts.value
   .map((p) => `- ${p.name} (x${p.quantity}) – ${p.discount_price} ${t("sum")}`)
   .join("\n")}
 
-📅 Дата: ${formatDate(selectedDate.value)} (${selectedTime.value})
+📅 Дата: ${formatDate(selectedDate.value)} (${formattedTimeRange.value})
 💳 Оплата: ${t("order_payment_text3")}
 🧾 Cумма: ${sum.value} ${t("sum")}
 📍 Адрес: ${selectedAddress.value}
@@ -573,11 +602,38 @@ useHead({
   background-color: #5a5754 !important;
 }
 :deep(.dp__arrow_top),
+:deep(.dp__input_icon),
 :deep(.dp__arrow_bottom) {
   display: none;
 }
 
 :global(.Toastify__toast-container--bottom-right) {
   margin-bottom: -1.5rem;
+}
+:deep(.vue__time-picker) {
+  background-color: #5a5754;
+  color: white;
+  border: none !important;
+}
+:deep(.dp__time_display),
+:deep(.dp__time_col-block) {
+  color: white !important;
+}
+:deep(.dp__time_col_reg_block) {
+  color: white !important;
+}
+:deep(.dp__overlay_cell:hover),
+:deep(.dp__time_display:hover:enabled) {
+  background: #6e6b69 !important;
+}
+:deep(.dp__overlay_cell) {
+  color: white !important;
+}
+:deep(.dp__overlay_cell_disabled) {
+  background: #6e6b69 !important;
+}
+:deep(.dp__inc_dec_button_disabled:hover),
+:deep(.dp__inc_dec_button:hover) {
+  background: #6e6b69 !important;
 }
 </style>
