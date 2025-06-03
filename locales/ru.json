@@ -60,7 +60,7 @@
   "error_occurred": "Ошибка",
   "delete_to_cart": "Удалить из корзины",
   "cart_title": "корзина",
-  "cart_header_title": "бесплатная доставка до дверей по городу Ташкент",
+  "cart_header_title": "бесплатная доставка до двери по городу Ташкент",
   "cart_header_text": "Способы оплаты: наличными, картой, перечислением",
   "cart_empty": "Список пуст",
   "cart_bottom_title": "итог:",
@@ -83,13 +83,13 @@
   "order_payment_text2": "Payme, Uzcard, Click, Humo",
   "order_payment_text3": "Oплата при получении",
   "order_sum": "итого",
-  "order_button": "подтвердить и оплатить",
+  "order_button": "Подтвердить",
   "confirm": "Подтвердить",
-  "nameerror": "Только буквы",
-  "emailerror": "Только е-мейл",
-  "phoneerror": "Только номер",
+  "nameerror": "Можно использовать только буквы",
+  "emailerror": "Введите адрес электронной почты в правильном формате",
+  "phoneerror": "Введите номер телефона в правильном формате",
   "fill_all_fields": "Укажите время доставки",
-  "email_send_error": "Не удалось отправить заказ по почте",
+  "email_send_error": "Не удалось отправить вашу заявку",
 
 
 

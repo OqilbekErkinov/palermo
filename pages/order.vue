@@ -233,7 +233,6 @@ import "vue3-toastify/dist/index.css";
 emailjs.init("C30GeIItXYu1hokzC");
 
 const selectedDate = ref(new Date());
-const selectedTime = ref("");
 const timeError = ref("");
 
 const selectedTimeRange = ref([]);
@@ -392,6 +391,7 @@ async function handleSubmit() {
     your_phone: userData.value.phone,
     selectedAddress: selectedAddress.value,
     selectedDay: formatDate(selectedDate.value),
+    selectedTime: formattedTimeRange.value,
     order_payment_text3: t("order_payment_text3"),
     sum: sum.value.toString(),
     products: selectedProducts.value.map((p) => ({
@@ -438,7 +438,7 @@ ${selectedProducts.value
 💳 Оплата: ${t("order_payment_text3")}
 🧾 Cумма: ${sum.value} ${t("sum")}
 📍 Адрес: ${selectedAddress.value}
-🗺️ [Открыть в Яндекс.Картах](https://yandex.com/maps/?text=${encodedAddress})
+🗺️ <a href="https://yandex.com/maps/?text=${encodedAddress}">Открыть в Яндекс Картах</a>
     `;
     await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
       method: "POST",
@@ -446,7 +446,8 @@ ${selectedProducts.value
       body: JSON.stringify({
         chat_id: telegramChatId,
         text: message,
-        parse_mode: "Markdown",
+        parse_mode: "HTML",
+
       }),
     });
   } catch (err) {

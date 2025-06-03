@@ -82,13 +82,13 @@
   "order_payment_text2": "Payme, Uzcard, Click, Humo",
   "order_payment_text3": "Payment upon delivery",
   "order_sum": "Total",
-  "order_button": "Confirm and Pay",
+  "order_button": "Confirm",
   "confirm": "Confirm",
-  "nameerror": "Letters only",
-  "emailerror": "Email only",
-  "phoneerror": "Numbers only",
-  "fill_all_fields": "Please enter a time for delivery",
-  "email_send_error": "Failed to send order email",
+  "nameerror": "Only letters can be used",
+  "emailerror": "Please enter your email address in the correct format",
+  "phoneerror": "Please enter your phone number in the correct format",
+  "fill_all_fields": "Specify delivery time",
+  "email_send_error": "Failed to submit your request",
 
   
 
