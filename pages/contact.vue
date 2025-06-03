@@ -102,6 +102,8 @@ import emailjs from 'emailjs-com'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
+
+
 const name = ref('')
 const email = ref('')
 const phone = ref('')
@@ -118,17 +120,17 @@ const { footerData } = useFooter()
 // ✅ Validation
 const validateName = () => {
   const namePattern = /^[A-Za-z\u0400-\u04FF\s'-]+$/
-  nameError.value = namePattern.test(name.value) ? '' : t('letters only')
+  nameError.value = namePattern.test(name.value) ? '' : t('nameerror');
 }
 
 const validateEmail = () => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  emailError.value = emailPattern.test(email.value) ? '' : t('enter valid email')
+  emailError.value = emailPattern.test(email.value) ? '' : t('emailerror')
 }
 
 const validatePhone = () => {
   const phonePattern = /^\+998\d{9}$/
-  phoneError.value = phonePattern.test(phone.value) ? '' : t('phone format is wrong')
+  phoneError.value = phonePattern.test(phone.value) ? '' : t('phoneerror')
 }
 
 const isFormValid = () => {

@@ -296,19 +296,19 @@ const phoneError = ref("");
 
 function validateName() {
   const regex = /^[A-Za-zА-Яа-яЁё\s'-]+$/;
-  nameError.value = regex.test(userData.value.name) ? "" : t("letters only");
+  nameError.value = regex.test(userData.value.name) ? "" : t("nameerror");
 }
 function validateSurname() {
   const regex = /^[A-Za-zА-Яа-яЁё\s'-]+$/;
   surnameError.value = regex.test(userData.value.surname)
     ? ""
-    : t("letters only");
+    : t("nameerror");
 }
 function validatePhone() {
   const regex = /^\+998\d{9}$/;
   phoneError.value = regex.test(userData.value.phone)
     ? ""
-    : t("phone format is wrong");
+    : t("phoneerror");
 }
 
 if (process.client) {
@@ -413,7 +413,7 @@ async function handleSubmit() {
     toast.success(t("data_sent_successfully"), { position: "bottom-right" });
   } catch (error) {
     console.error("EmailJS error:", error);
-    toast.error(t("Failed to send order email."), { position: "bottom-right" });
+    toast.error(t("email_send_error"), { position: "bottom-right" });
     return;
   }
 

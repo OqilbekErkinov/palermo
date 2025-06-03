@@ -84,6 +84,21 @@
   "order_sum": "Total",
   "order_button": "Confirm and Pay",
   "confirm": "Confirm",
+  "nameerror": "Letters only",
+  "emailerror": "Email only",
+  "phoneerror": "Numbers only",
+  "fill_all_fields": "Please enter a time for delivery",
+  "email_send_error": "Failed to send order email",
+
+  
+
+
+
+
+
+
+
+
   "meta": {
     "title": "Palermo — Декоративной пасты в Узбекистане ",
     "description": "Декоративные пасты Palermo — это итальянское качество, элегантные текстуры и стойкость материалов, которые позволяют создавать стильные и уникальные интерьеры",
